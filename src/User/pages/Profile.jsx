@@ -29,10 +29,10 @@ function Profile() {
     }
 
     <div className='w-full'>
-      <div className='h-[30vh] bg-gray-900 relative'>
+      <div className='h-[30vh] bg-gray-300 relative'>
         <div className='absolute -bottom-20 left-10'>
   <img
-    src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQqtlkSQY2nHMqvo2jzxpJyqc2at2TiMASzrAqXrXBXw&s=10'
+    src='https://png.pngtree.com/png-vector/20241115/ourmid/pngtree-user-icon-web-admin-profile-avatar-silver-color-style-vector-png-image_14430725.png'
     alt='Profile Image'
     className='w-40 h-40 rounded-full object-cover border-4 border-white'
   />
@@ -63,7 +63,7 @@ function Profile() {
     </div>
 
     <div className='w-full flex justify-center'>
-      <div className='gap-2 mb-50'>
+      <div className='gap-2'>
       <button className={sellStatus?trueClass:falseClass} onClick={() => 
         {
           setSellStatus(true)
@@ -95,7 +95,7 @@ function Profile() {
       
       {
         sellStatus &&
-        <div className='bg-gray-200'>
+        <div className='bg-gray-900 rounded-lg text-white m-20'>
           <h1 className='text-2xl text-center my-2 py-3 flex justify-center'>Book Details</h1>
           <div className='grid sm:grid-cols-1 md:grid-cols-2'>
             <div className='px-2'>
