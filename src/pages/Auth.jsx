@@ -9,13 +9,14 @@ import { userRegisterAPI } from "../services/allApis";
 import { ToastContainer,toast } from "react-toastify";
 
 function Auth() {
-  const [authStatus, setAuthStatus] = useState(true);
+  const [authStatus, setAuthStatus] = useState(false);
 
   const handleRegister = async (data) => {
       const response = await userRegisterAPI(data);
       console.log(response);
     if(response.status===201){
       toast.success("User Registration Successfull")
+      setAuthStatus(true)
     }
     else{
       toast.error("Something went wrong")
@@ -31,9 +32,8 @@ function Auth() {
 
     validationSchema: Yup.object({
       username: Yup.string()
-        .min(3, "Must be atleast 3 characters")
-        .required("Required"),
-
+        .min(3, "Must be atleast 3 characters"),
+        
       email: Yup.string()
         .email("Invalid Email")
         .required("Required"),
@@ -172,7 +172,7 @@ function Auth() {
             </div>
           </div>
         </div>
-        <ToastContainer position="top-center" autoClose={3000}/>
+        <ToastContainer position='top-center' autoClose={'3000'}/>
       </div>
     </>
   );
