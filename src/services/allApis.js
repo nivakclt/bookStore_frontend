@@ -10,3 +10,8 @@ export const userLoginApi=async(data)=>{
     return await apiService("POST",'/login',data)
 
 }
+
+// google authentication->token generation
+export const googleAuthApi=async (data)=>{
+    return await apiService("POST",'/google-auth',data)
+}

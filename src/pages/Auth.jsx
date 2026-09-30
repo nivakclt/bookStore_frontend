@@ -4,44 +4,92 @@ import { useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
-import { userRegisterAPI } from "../services/allApis";
+import { googleAuthApi, userRegisterAPI } from "../services/allApis";
+import { userLoginApi } from "../services/allApis";
 
-import { ToastContainer,toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
+
+import { GoogleLogin } from "@react-oauth/google";
+
+import { jwtDecode } from "jwt-decode";
+
+import { useNavigate } from "react-router-dom";
 
 function Auth() {
   const [authStatus, setAuthStatus] = useState(false);
 
+  const nav = useNavigate();
+
   const handleRegister = async (data) => {
-      const response = await userRegisterAPI(data);
-      console.log(response);
-    if(response.status===201){
-      toast.success("User Registration Successfull")
-      setAuthStatus(true)
-    }
-    else{
-      toast.error("Something went wrong")
+    const response = await userRegisterAPI(data);
+    console.log(response);
+    if (response.status === 201) {
+      toast.success("User Registration Successfull");
+      setAuthStatus(true);
+    } else {
+      toast.error("Something went wrong");
     }
   };
 
+  const handleLogin = async (data) => {
+    const response = await userLoginApi(data);
+    console.log(response);
+    if(response.status === 200){
+      sessionStorage.setItem("token",response.data.token)
+      sessionStorage.setItem("user",JSON.stringify(response.data.user))
+      toast.success("Login Successfully Completed")
+    if(response.data.user.role ==="admin"){
+      nav('/admin')
+    }
+      else{
+        nav('/')
+      }
+    }
+    else{
+      toast.error("Login failed!!")
+    }
+  };
+
+  const handleGoogleLogin=async (credentialResponse)=>{
+    console.log(credentialResponse)
+    const res=jwtDecode(credentialResponse.credential)
+    // console.log(res)
+    const {email,name,picture}=res
+    const response=await googleAuthApi({email,name,picture})
+    if(response.status===200){
+      sessionStorage.setItem("token",response.data.token)
+      sessionStorage.setItem("user",JSON.stringify(response.data.user))
+      toast.success("Login Successfull !!")
+      if(response.data.user.role==="admin"){
+        nav('/admin')
+      }
+      else{
+        nav('/')
+      }
+    }
+    else{
+      toast.error("Something Went Wrong!!")
+    }    
+  }
+
   const formik = useFormik({
     initialValues: {
-      username: "",
+      username: "Demo",
       email: "",
       password: "",
     },
 
     validationSchema: Yup.object({
       username: Yup.string()
-        .min(3, "Must be atleast 3 characters"),
-        
-      email: Yup.string()
-        .email("Invalid Email")
-        .required("Required"),
+        .min(3, "Must be atleast 3 characters")
+        .required("Username Required"),
+
+      email: Yup.string().email("Invalid Email").required("Required"),
 
       password: Yup.string().required("Required"),
     }),
 
-    onSubmit: async (values,{resetForm}) => {
+    onSubmit: async (values, { resetForm }) => {
       console.log(values);
 
       // Register
@@ -53,8 +101,9 @@ function Auth() {
       // Login
       else {
         console.log("Login API");
+        handleLogin(values);
       }
-      resetForm()
+      resetForm();
     },
   });
 
@@ -84,12 +133,11 @@ function Auth() {
                     className="w-full border text-black border-gray-700 p-3 rounded-lg mb-2"
                   />
 
-                  {formik.touched.username &&
-                    formik.errors.username && (
-                      <div className="text-red-500 mb-2">
-                        {formik.errors.username}
-                      </div>
-                    )}
+                  {formik.touched.username && formik.errors.username && (
+                    <div className="text-red-500 mb-2">
+                      {formik.errors.username}
+                    </div>
+                  )}
                 </>
               )}
 
@@ -103,12 +151,9 @@ function Auth() {
                 className="w-full border text-black border-gray-700 p-3 rounded-lg mb-2"
               />
 
-              {formik.touched.email &&
-                formik.errors.email && (
-                  <div className="text-red-500 mb-2">
-                    {formik.errors.email}
-                  </div>
-                )}
+              {formik.touched.email && formik.errors.email && (
+                <div className="text-red-500 mb-2">{formik.errors.email}</div>
+              )}
 
               <input
                 name="password"
@@ -120,12 +165,11 @@ function Auth() {
                 className="w-full border text-black border-gray-700 p-3 rounded-lg mb-2"
               />
 
-              {formik.touched.password &&
-                formik.errors.password && (
-                  <div className="text-red-500 mb-2">
-                    {formik.errors.password}
-                  </div>
-                )}
+              {formik.touched.password && formik.errors.password && (
+                <div className="text-red-500 mb-2">
+                  {formik.errors.password}
+                </div>
+              )}
 
               <div className="flex justify-between items-center mb-6">
                 <p className="text-xs text-gray-500">
@@ -141,11 +185,23 @@ function Auth() {
 
               <button
                 type="submit"
-                className="w-full border border-black py-3 rounded-lg text-white bg-black hover:bg-white hover:text-black transition duration-300"
+                className="w-full border border-black py-3 rounded-lg text-white bg-black hover:bg-white hover:text-black transition duration-300 mb-3"
               >
                 {authStatus ? "Login" : "Register"}
               </button>
             </form>
+            {/* google auth */}
+              <div className="flex justify-center">
+                <GoogleLogin
+                  onSuccess={(credentialResponse) => {
+                  handleGoogleLogin(credentialResponse)
+                  }}
+                  onError={() => {
+                    console.log("Login Failed");
+                  }}
+                />
+                
+              </div>
 
             <div className="flex justify-center gap-2 mt-6 text-sm text-black">
               {authStatus ? (
@@ -169,10 +225,11 @@ function Auth() {
                   </span>
                 </>
               )}
+            
             </div>
           </div>
         </div>
-        <ToastContainer position='top-center' autoClose={'3000'}/>
+        <ToastContainer position="top-center" autoClose={3000} />
       </div>
     </>
   );
