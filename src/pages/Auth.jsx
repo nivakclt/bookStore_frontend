@@ -51,9 +51,9 @@ function Auth() {
   };
 
   const handleGoogleLogin=async (credentialResponse)=>{
-    console.log(credentialResponse)
+    try{
+      console.log(credentialResponse)
     const res=jwtDecode(credentialResponse.credential)
-    // console.log(res)
     const {email,name,picture}=res
     const response=await googleAuthApi({email,name,picture})
     if(response.status===200){
@@ -67,9 +67,11 @@ function Auth() {
         nav('/')
       }
     }
-    else{
-      toast.error("Something Went Wrong!!")
-    }    
+    }catch(err){
+      console.log("Google login err",err)
+      toast.error("Google Login Failed!!")
+    }
+    
   }
 
   const formik = useFormik({

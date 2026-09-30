@@ -1,7 +1,10 @@
 
 import { CiPower } from "react-icons/ci"
+
     
 function AdminHeader() {
+
+
   return (
     <>
     <div className="w-full">
