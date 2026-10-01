@@ -3,9 +3,21 @@ import Footer from './components/Footer'
 import { FaRegEdit } from 'react-icons/fa'
 
 import Profileupdate from './components/Profileupdate'
-import { useState } from 'react'
+import { useState,useEffect } from 'react'
 
 function Profile() {
+  const [username,setUsername]=useState("")
+  const [dp,setDp]=useState("")
+  const [bio,setBio]=useState("")
+
+  useEffect(()=>{
+    if(sessionStorage.getItem("token") && sessionStorage.getItem("user")){
+      const user=JSON.parse(sessionStorage.getItem("user"))
+      setDp(user?.picture)
+      setUsername(user?.username)
+      setBio(user?.bio)
+    }
+  },[])
 
   const[sidebar,setSidebar]=useState(false)
 
@@ -32,7 +44,7 @@ function Profile() {
       <div className='h-[30vh] bg-gray-300 relative'>
         <div className='absolute -bottom-20 left-10'>
   <img
-    src='https://png.pngtree.com/png-vector/20241115/ourmid/pngtree-user-icon-web-admin-profile-avatar-silver-color-style-vector-png-image_14430725.png'
+    src={dp ? dp : 'https://png.pngtree.com/png-vector/20241115/ourmid/pngtree-user-icon-web-admin-profile-avatar-silver-color-style-vector-png-image_14430725.png'}
     alt='Profile Image'
     className='w-40 h-40 rounded-full object-cover border-4 border-white'
   />
@@ -40,14 +52,10 @@ function Profile() {
       </div>
 
       <div className='px-10'>
-        <h1 className='mt-35 font-bold'>Username</h1>
+        <h1 className='mt-35 font-bold'>{username}</h1>
         <div className='grid grid-cols-2'>
           <div>
-            <p className='text-justify'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-              Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-              Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-              Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-              
+            <p className='text-justify'>{bio}</p>
           </div>
           <div className='flex justify-end'>
                 <button className='self-start p-3 bg-gray-900 text-white rounded-lg flex gap-2 items-center' onClick={()=>setSidebar(!sidebar)}>
