@@ -15,3 +15,8 @@ export const userLoginApi=async(data)=>{
 export const googleAuthApi=async (data)=>{
     return await apiService("POST",'/google-auth',data)
 }
+
+// profile -edit
+export const profileEditApi=async(data)=>{
+    return await apiService("PUT",'/profile-edit',data)
+}
