@@ -4,7 +4,7 @@ import { FaRegEdit } from 'react-icons/fa'
 
 import Profileupdate from './components/Profileupdate'
 import { useState,useEffect } from 'react'
-
+import axiosInstance from "../../api/axiosInstance";
 function Profile() {
   const [username,setUsername]=useState("")
   const [dp,setDp]=useState("")
@@ -43,11 +43,27 @@ function Profile() {
     <div className='w-full'>
       <div className='h-[30vh] bg-gray-300 relative'>
         <div className='absolute -bottom-20 left-10'>
+ {
+  dp == '' ?
   <img
-    src={dp ? dp : 'https://png.pngtree.com/png-vector/20241115/ourmid/pngtree-user-icon-web-admin-profile-avatar-silver-color-style-vector-png-image_14430725.png'}
-    alt='Profile Image'
-    className='w-40 h-40 rounded-full object-cover border-4 border-white'
+    src="https://png.pngtree.com/png-vector/20241115/ourmid/pngtree-user-icon-web-admin-profile-avatar-silver-color-style-vector-png-image_14430725.png"
+    alt="Profile Image"
+    className="w-40 h-40 rounded-full object-cover border-4 border-white"
   />
+  :
+  dp.includes('lh3.googleusercontent.com') ?
+  <img
+    src={dp}
+    alt="Profile Image"
+    className="w-40 h-40 rounded-full object-cover border-4 border-white"
+  />
+  :
+  <img
+    src={`${axiosInstance.defaults.baseURL}/uploads/${dp}`}
+    alt="Profile Image"
+    className="w-40 h-40 rounded-full object-cover border-4 border-white"
+  />
+}
 </div>
       </div>
 

@@ -9,7 +9,7 @@ const axiosInstance = axios.create({
 // request interceptor rejects the request if the token is not present in the local storage
 axiosInstance.interceptors.request.use(
     (config) => {
-        const token = localStorage.getItem('token')
+        const token = sessionStorage.getItem('token')
         if (token) {
             config.headers.Authorization = `Bearer ${token}`
         }

@@ -38,21 +38,21 @@ function Auth() {
       sessionStorage.setItem("token",response.data.token)
       sessionStorage.setItem("user",JSON.stringify(response.data.user))
       toast.success("Login Successfully Completed")
-    if(response.data.user.role ==="admin"){
-      nav('/admin')
-    }
-      else{
-        nav('/')
-      }
+      setTimeout(()=>{
+        if(response.data.user.role=="admin"){
+          nav('/admin')
+        }else{
+          nav('/')
+        }
+      },2000)
     }
     else{
-      toast.error("Login failed!!")
+      toast.error('Something went wrong')
     }
-  };
+  }
 
   const handleGoogleLogin=async (credentialResponse)=>{
-    try{
-      console.log(credentialResponse)
+    console.log(credentialResponse)
     const res=jwtDecode(credentialResponse.credential)
     const {email,name,picture}=res
     const response=await googleAuthApi({email,name,picture})
@@ -60,19 +60,19 @@ function Auth() {
       sessionStorage.setItem("token",response.data.token)
       sessionStorage.setItem("user",JSON.stringify(response.data.user))
       toast.success("Login Successfull !!")
+      setTimeout(()=>{
       if(response.data.user.role==="admin"){
         nav('/admin')
       }
       else{
         nav('/')
       }
-    }
-    }catch(err){
-      console.log("Google login err",err)
-      toast.error("Google Login Failed!!")
-    }
-    
+    },2000)
   }
+  else{
+    toast.error("Something went wrong!!")
+  }
+}
 
   const formik = useFormik({
     initialValues: {
@@ -103,7 +103,7 @@ function Auth() {
       // Login
       else {
         console.log("Login API");
-        handleLogin(values);
+        await handleLogin(values);
       }
       resetForm();
     },
