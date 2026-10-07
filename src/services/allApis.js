@@ -17,6 +17,10 @@ export const googleAuthApi=async (data)=>{
 }
 
 // profile -edit
-export const profileEditApi=async(data)=>{
-    return await apiService("PUT",'/profile-edit',data)
+export const profileEditApi = async(data) => {
+
+    const id = data instanceof FormData ? data.get("id") : data.id
+
+    return await apiService("PUT", `/profile-edit/${id}`, data)
+
 }
