@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { FaCaretUp } from "react-icons/fa";
 import { FaCaretDown } from "react-icons/fa";
 import { useEffect, useState } from "react";
-
+import axiosInstance from "../../../api/axiosInstance";
 function Header() {
   const [dropdown, setDropdown] = useState(false);
   const [token, setToken] = useState("");
@@ -56,10 +56,13 @@ function Header() {
               >{
                 dp === "" ?
                 <>
-                   <FaUser /> 
+                   <FaUser />
                 </>
                 :
+                dp.includes("lh3.googleusercontent.com") ?
                 <img src={dp} alt="" width={'50px'} className="rounded-full"/>
+                :
+                <img src={`${axiosInstance.defaults.baseURL}/uploads/${dp}`} alt="" width={'50px'} className="rounded-full"/>
               }{
                 userName=="" ?
                 <>User{' '}</>
@@ -87,11 +90,7 @@ function Header() {
         </div>
       </div>
       <div className="w-full bg-black py-3.5 flex flex-col md:flex-row justify-center items-center text-white gap-4">
-        <Link
-          to={"/"}
-          className="hover:text-red-100 transition-all duration-300"
-        >
-          Home
+        <Link to={"/"} className="hover:text-red-100 transition-all duration-300">  Home
         </Link>
         <Link
           to={"/about"}
