@@ -3,14 +3,27 @@ import Preloader from "../components/Preloader";
 import Header from "../User/pages/components/Header";
 import Footer from "../User/pages/components/Footer";
 import { FaSearch } from "react-icons/fa";
+
+import { latestBookApi } from "../services/allApis";
+
 function Home() {
   const [loadStatus, setLoadStatus] = useState(true);
+  const [latest,setLatest]=useState([])
 
   useEffect(() => {
     setTimeout(() => {
       setLoadStatus(false);
     }, 2000);
+    handleLatestBook()
   }, []);
+
+  const handleLatestBook=async()=>{
+    const response =  await  latestBookApi()
+    console.log(response)
+    if(response.status===200){
+      setLatest(response.data)
+    }
+  }
 
   return (
     <>
@@ -70,27 +83,40 @@ function Home() {
                 Discover our latest collection
               </p>
 
+            {/* card */}{
+              latest.length>0?
               <div className="flex justify-center">
-                <div className="w-64">
-                  <img
-                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRA539xYtxbtfoXg1yG4tsKK04wyVfkZfCY6LQHQeYFRV0oc6u_E1GZKaV5&s=10"
-                    alt="Harry Potter"
-                    className="w-full h-80 object-cover rounded-md transition duration-300 hover:scale-105"
-                  />
+              {
+                latest.map(item => (
+              <div className="w-64" key={item._id}>
+                <img
+                  src={item.imageUrl}
+                  alt={item.title}
+                  className="w-full h-80 object-cover rounded-md transition duration-300 hover:scale-105"
+                />
 
-                  <h2 className="mt-4 text-center text-lg">Harry Potter</h2>
+                <h2 className="mt-4 text-center text-lg">{item?.title}</h2>
 
-                  <p className="text-center text-gray-400 mt-1">$19.99</p>
-                </div>
+                <p className="text-center text-gray-400 mt-1">₹{item?.price}</p>
               </div>
-
-              <div className="text-center mt-12">
-                <button className="border border-white px-6 py-3 rounded-md hover:bg-white hover:text-black transition">
-                  Explore More
-                </button>
+            ))
+              }
+             
               </div>
-            </section>
-            {/* authors */}
+              :
+              <div className="text-center p-10">
+                No Books Available!!!!
+              </div>
+}
+
+        <div className="text-center mt-12">
+          <button className="border border-white px-6 py-3 rounded-md hover:bg-white hover:text-black transition">
+            Explore More
+          </button>
+        </div>
+      </section>
+      
+      {/* authors */}
             <section className="w-full py-16 px-6">
               <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
                 <div>

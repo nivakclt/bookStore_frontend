@@ -22,6 +22,26 @@ export const profileEditApi = async(data) => {
 }
 
 // add book
-export const addBookApi = async(data) => {
+export const addBookApi= async(data) => {
     return await apiService("POST", "/books", data)
+}
+
+// latest books
+export const latestBookApi=async()=>{
+    return await apiService("GET","/latest-books")
+}
+
+// book list for buyers
+export const bookListApi=async()=>{
+        return await apiService("GET","/booklist")
+}
+
+// user added books
+export const userAddedBooksApi=async()=>{
+    return await apiService("GET","/user-books")
+}
+
+// delete user added books
+export const deleteBookApi=async(id)=>{
+    return await apiService("DELETE",`/delete-book/${id}`)
 }

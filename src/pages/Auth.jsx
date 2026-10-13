@@ -32,6 +32,7 @@ function Auth() {
   };
 
   const handleLogin = async (data) => {
+    try{
     const response = await userLoginApi(data);
     console.log(response);
     if(response.status === 200){
@@ -46,10 +47,15 @@ function Auth() {
         }
       },2000)
     }
-    else{
+  }
+  catch(error){
+  {
+      console.log(error)
       toast.error('Something went wrong')
     }
   }
+}
+
 
   const handleGoogleLogin=async (credentialResponse)=>{
     console.log(credentialResponse)

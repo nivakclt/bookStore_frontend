@@ -1,6 +1,8 @@
 import {useState} from 'react'
-import { toast } from 'react-toastify'
+import { toast,ToastContainer } from 'react-toastify';
 import { FaPlus } from 'react-icons/fa'
+
+import { addBookApi } from '../../../services/allApis'
 
 function SellBook() {
 
@@ -22,9 +24,40 @@ function SellBook() {
             console.log(previewList)
     }
 
-    const handleSubmit=()=>{
-        console.log(book)
+    const handleSubmit = async () => {
+    const { title, author, noOfPages, imageUrl, price, discountPrice,
+        abstract, publisher, language, isbn, category, uploadedImages} = book
+
+    if (
+        !title || !author || !noOfPages || !imageUrl || !price ||
+        !discountPrice || !abstract || !publisher || !language ||
+        !isbn || !category || uploadedImages.length === 0
+    ) {
+        toast.warning("Enter Valid Inputs")
+    } else {
+        const formData = new FormData()
+        for (let key in book) {
+            if (key !== "uploadedImages") {
+                formData.append(key, book[key])
+            } else {
+                book.uploadedImages.forEach(img => {
+                    formData.append("uploadedImages", img)
+                })
+            }
+        }
+        const response = await addBookApi(formData)
+        if (response.status === 200) {
+            toast.success("Book Added Successfully")
+            setBook({
+                title: "", author: "", noOfPages: "", imageUrl: "",
+                price: "", discountPrice: "", abstract: "", publisher: "",
+                language: "", isbn: "", category: "", uploadedImages: []
+            })
+            setPreview("")
+            setPreviewList([])
+        }
     }
+}
     
   return (
     <div className='bg-gray-900 rounded-lg text-white m-20'>
@@ -58,9 +91,9 @@ function SellBook() {
                         preview &&
                         <div className='flex justify-around items-center'>
                             {
-                                previewList.map(item=>{
-                                    <img src={item} className='h-[100px]' alt='preview'/>
-                                })
+                                 previewList.map(item => (
+                                <img src={item} className='h-[100px]' alt='preview'/>
+))
                             }
                             {
                                 previewList.length < 3 &&
@@ -80,6 +113,7 @@ function SellBook() {
 
             </div>
           </div>
+        <ToastContainer position='top-center'/>
         </div>
   )
 }

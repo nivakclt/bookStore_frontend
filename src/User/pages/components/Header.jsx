@@ -15,8 +15,8 @@ function Header() {
       const userToken = sessionStorage.getItem("token");
       const userobj = JSON.parse(sessionStorage.getItem("user"));
       setToken(userToken);
-      setDp(userobj.picture);
-      setUserName(userobj.username)
+      setDp(userobj.picture || "");
+      setUserName(userobj.username || "")
     }
   }, [token]);
 
