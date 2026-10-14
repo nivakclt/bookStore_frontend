@@ -45,3 +45,8 @@ export const userAddedBooksApi=async()=>{
 export const deleteBookApi=async(id)=>{
     return await apiService("DELETE",`/delete-book/${id}`)
 }
+
+// purchased books
+export const purchasedBookApi=async()=>{
+    return await apiService("GET",'/purchased-books')
+}

@@ -10,6 +10,11 @@ function Books() {
   const [filters, setFilters] = useState([]);
   const [dummylist, setDummyList] = useState([]);
 
+  const handleSearch=(keyword)=>{
+    const books=dummylist.filter(item=>item.title.toLowerCase().includes(keyword.toLowerCase()))
+    setBookList(books)
+  }
+
   useEffect(() => {
     if (sessionStorage.getItem("token")) {
       handleBookList();
@@ -57,6 +62,7 @@ function Books() {
         {/* Search Bar */}
         <div className="flex justify-center mb-9">
           <input
+          onChange={(e)=>{handleSearch(e.target.value)}}
             type="text"
             placeholder="Enter Title to Search"
             className="px-5 py-2 outline-1 w-[50%] rounded-full border border-gray-300"

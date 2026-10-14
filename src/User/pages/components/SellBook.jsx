@@ -83,8 +83,8 @@ function SellBook() {
                     <input type='file' name='' className='hidden' id='bookimgfile' onChange={handleFileUpload}/>
                 }
                 
-                <img src={preview?preview:'https://png.pngtree.com/png-clipart/20190921/original/pngtree-file-upload-icon-png-image_4717174.jpg'} alt='bookimg' 
-                className='w-[50%] h-[100px]'/>
+                <img src={preview?preview:'https://png.pngtree.com/png-vector/20260923/ourmid/pngtree-3d-white-cloud-upload-data-and-storage-icon-png-image_20208282.webp'} alt='bookimg' 
+                className='w-[50%] h-[300px]'/>
                 </label>
                 <div className='p-2'>
                     {

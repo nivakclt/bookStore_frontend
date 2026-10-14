@@ -62,7 +62,7 @@ function Header() {
                 dp.includes("lh3.googleusercontent.com") ?
                 <img src={dp} alt="" width={'50px'} className="rounded-full"/>
                 :
-                <img src={`${axiosInstance.defaults.baseURL}/uploads/${dp}`} alt="" width={'50px'} className="rounded-full"/>
+                <img src={`${axiosInstance.defaults.baseURL}/uploads/${dp}`} alt="" width={'40px'}  className="h-[40px] rounded-full"/>
               }{
                 userName=="" ?
                 <>User{' '}</>

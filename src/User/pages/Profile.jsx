@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import Profileupdate from "./components/Profileupdate";
 import SellBook from "./components/SellBook";
 import axiosInstance from "../../api/axiosInstance";
-import { userAddedBooksApi, deleteBookApi } from "../../services/allApis";
+import { userAddedBooksApi, deleteBookApi,purchasedBookApi, bookListApi } from "../../services/allApis";
 import { toast, ToastContainer } from "react-toastify";
 
 function Profile() {
@@ -19,6 +19,8 @@ function Profile() {
   const [purchaseStatus, setPurchaseStatus] = useState(false);
 
   const [userBooklist, setUserBookList] = useState([]);
+  const [purchaselist,setPurchasedList]=useState([])
+
 
   useEffect(() => {
     if (sessionStorage.getItem("token") && sessionStorage.getItem("user")) {
@@ -35,6 +37,19 @@ function Profile() {
       handleUserAddedBooks();
     }
   }, [bookStatus]);
+
+  useEffect(()=>{
+    if(sessionStorage.getItem('token')){
+      handlePurchasedBooks
+    }
+},[purchaseStatus])
+
+  const handlePurchasedBooks= async () =>{
+    const response = await purchasedBookApi()
+    if(response.status===200){
+      setPurchaseStatus(response.data)
+    }
+  }
 
   const handleUserAddedBooks = async () => {
     try {
@@ -64,6 +79,8 @@ function Profile() {
     }
   };
 
+  
+
   const activeTab =
     "px-4 py-3 bg-black text-white rounded-lg text-center font-medium transition";
 
@@ -74,7 +91,7 @@ function Profile() {
     <>
       <Header />
 
-      {/* Profile Update */}
+      {/* /* Profile Update */ }
       {sidebar && <Profileupdate setSidebar={setSidebar} />}
 
       {/* Profile Section */}
@@ -123,54 +140,54 @@ function Profile() {
         </div>
       </div>
 
-<div className="w-full flex justify-center px-4 mt-12">
-  <div className="flex flex-row justify-center items-end w-full max-w-3xl border-b border-black">
-    <button
-      className={`px-3 py-3 border border-b-0 text-black whitespace-nowrap ${
-        sellStatus
-          ? "bg-white border-black relative after:absolute after:bottom-[-1px] after:left-0 after:w-full after:h-[1px] after:bg-white"
-          : "bg-transparent border-transparent"
-      }`}
-      onClick={() => {
-        setSellStatus(true);
-        setBookStatus(false);
-        setPurchaseStatus(false);
-      }}
-    >
-      Sell Books
-    </button>
+      <div className="w-full flex justify-center px-4 mt-12">
+        <div className="flex flex-row justify-center items-end w-full max-w-3xl border-b border-black">
+          <button
+            className={`px-3 py-3 border border-b-0 text-black whitespace-nowrap ${
+              sellStatus
+                ? "bg-white border-black relative after:absolute after:bottom-[-1px] after:left-0 after:w-full after:h-[1px] after:bg-white"
+                : "bg-transparent border-transparent"
+            }`}
+            onClick={() => {
+              setSellStatus(true);
+              setBookStatus(false);
+              setPurchaseStatus(false);
+            }}
+          >
+            Sell Books
+          </button>
 
-    <button
-      className={`px-3 py-3 border border-b-0 text-black whitespace-nowrap ${
-        bookStatus
-          ? "bg-white border-black relative after:absolute after:bottom-[-1px] after:left-0 after:w-full after:h-[1px] after:bg-white"
-          : "bg-transparent border-transparent"
-      }`}
-      onClick={() => {
-        setSellStatus(false);
-        setBookStatus(true);
-        setPurchaseStatus(false);
-      }}
-    >
-      Book Status
-    </button>
+          <button
+            className={`px-3 py-3 border border-b-0 text-black whitespace-nowrap ${
+              bookStatus
+                ? "bg-white border-black relative after:absolute after:bottom-[-1px] after:left-0 after:w-full after:h-[1px] after:bg-white"
+                : "bg-transparent border-transparent"
+            }`}
+            onClick={() => {
+              setSellStatus(false);
+              setBookStatus(true);
+              setPurchaseStatus(false);
+            }}
+          >
+            Book Status
+          </button>
 
-    <button
-      className={`px-3 py-3 border border-b-0 text-black whitespace-nowrap ${
-        purchaseStatus
-          ? "bg-white border-black relative after:absolute after:bottom-[-1px] after:left-0 after:w-full after:h-[1px] after:bg-white"
-          : "bg-transparent border-transparent"
-      }`}
-      onClick={() => {
-        setSellStatus(false);
-        setBookStatus(false);
-        setPurchaseStatus(true);
-      }}
-    >
-      Purchase History
-    </button>
-  </div>
-</div>
+          <button
+            className={`px-3 py-3 border border-b-0 text-black whitespace-nowrap ${
+              purchaseStatus
+                ? "bg-white border-black relative after:absolute after:bottom-[-1px] after:left-0 after:w-full after:h-[1px] after:bg-white"
+                : "bg-transparent border-transparent"
+            }`}
+            onClick={() => {
+              setSellStatus(false);
+              setBookStatus(false);
+              setPurchaseStatus(true);
+            }}
+          >
+            Purchase History
+          </button>
+        </div>
+      </div>
 
       {/* Main Content */}
       <div className="w-full max-w-6xl mx-auto p-4 min-h-40">
@@ -193,9 +210,7 @@ function Profile() {
                       ₹{item?.price}
                     </h4>
 
-                    <p className="text-justify mt-3">
-                      {item?.abstract}
-                    </p>
+                    <p className="text-justify mt-3">{item?.abstract}</p>
 
                     <div className="mt-4">
                       {item?.status === "approved" ? (
@@ -233,38 +248,64 @@ function Profile() {
                 </div>
               ))
             ) : (
-              <p className="text-center text-gray-500 py-10">
-                No books added yet.
-              </p>
+              <div className="flex flex-col justify-center items-center h-100px">
+                <h3 className="text-lg font-semibold text-gray-900">
+                  No Books Available!
+                </h3>
+
+                <img
+                  src="https://png.pngtree.com/recommend-works/png-clipart/20250110/ourmid/pngtree-little-girl-sitting-on-the-sofa-reading-a-book-png-image_15119807.png"
+                  alt="Girl reading a book"
+                  className="w-48 h-auto object-contain"
+                />
+              </div>
             )}
           </div>
         )}
 
         {/* Purchase History */}
-        {purchaseStatus && (
-          <div className="mt-6">
-            <div className="p-5 border rounded-xl shadow-sm grid grid-cols-1 md:grid-cols-6 gap-6">
-              <div className="md:col-span-5">
-                <h1 className="font-bold text-xl">Book Title</h1>
+      
+{purchaseStatus &&
+  <div className="mt-6">
+    {
+      purchaselist.length > 0 ? (
+        purchaselist.map(book => (
+          <div className="p-5 border rounded-xl shadow-sm grid grid-cols-1 md:grid-cols-6 gap-6">
+            <div className="md:col-span-5">
+              <h1 className="font-bold text-xl">{book?.title}</h1>
 
-                <h4 className="font-bold text-green-600 mt-2">₹600</h4>
+              <h4 className="font-bold text-green-600 mt-2">₹{book?.price}</h4>
 
-                <p className="text-justify mt-3">
-                  Purchase details will appear here when purchase history
-                  is connected to your backend.
-                </p>
-              </div>
+              <p className="text-justify mt-3">
+                {book?.abstract}
+              </p>
+            </div>
 
-              <div className="md:col-span-1">
-                <img
-                  src="https://ew.com/thmb/wVbnTFDHmKhH-GWRPlcQI-6ASAY=/2000x0/filters:no_upscale():max_bytes(150000):strip_icc()/hpsorcstone-e2b869c8764c4f6699f9877f99380f32.jpg"
-                  alt="Book"
-                  className="w-full h-48 object-cover rounded-lg"
-                />
-              </div>
+            <div className="md:col-span-1">
+              <img
+                src={book?.imageUrl}
+                alt="Book"
+                className="w-full h-48 object-cover rounded-lg"
+              />
             </div>
           </div>
-        )}
+        ))
+      ) : (
+        <div className="flex flex-col justify-center items-center h-100px">
+          <h3 className="text-lg font-semibold text-gray-900">
+            No Books Available!
+          </h3>
+
+          <img
+            src="https://png.pngtree.com/recommend-works/png-clipart/20250110/ourmid/pngtree-little-girl-sitting-on-the-sofa-reading-a-book-png-image_15119807.png"
+            alt="Girl reading a book"
+            className="w-48 h-auto object-contain"
+          />
+        </div>
+      )
+    }
+  </div>
+}
       </div>
 
       <ToastContainer position="top-center" />
