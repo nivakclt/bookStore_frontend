@@ -15,6 +15,7 @@ import Resources from './Admin/pages/Resources'
 import Settings from './Admin/pages/Settings'
 
 import Pnf from './pages/Pnf'
+import About from './pages/About'
 
 function App() {
   
@@ -31,6 +32,7 @@ function App() {
       <Route path='book/:bid' element={<BookDetails/>}/>
       <Route path='contact' element={<Contact/>}/>
       <Route path='profile' element={<Profile/>}/>
+      <Route path="/about" element={<About />} />
 
       {/* admin */}
       <Route path='admin' element={<Dashboard/>}/>

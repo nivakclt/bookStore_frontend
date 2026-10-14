@@ -1,8 +1,8 @@
+
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { useEffect, useState } from "react";
-
 import { bookListApi } from "../../services/allApis";
 
 function Books() {
@@ -19,21 +19,25 @@ function Books() {
   const handleBookList = async () => {
     const response = await bookListApi();
     console.log(response);
+
     if (response.status === 200) {
       setBookList(response.data);
       setDummyList(response.data);
-      const category_set = new Set(response.data.map((item) => item.category));
+
+      const category_set = new Set(
+        response.data.map((item) => item.category)
+      );
+
       setFilters([...category_set]);
     }
   };
 
   const filterBooks = (filter) => {
-    console.log(filter);
     if (filter) {
       const filteredBooks = dummylist.filter(
-        (item) => item?.category == filter,
+        (item) => item?.category === filter
       );
-      console.log(filteredBooks);
+
       setBookList(filteredBooks);
     } else {
       setBookList(dummylist);
@@ -43,10 +47,15 @@ function Books() {
   return (
     <>
       <Header />
-      {/* booklist */}
+
+      {/* Book List */}
       <div className="w-full py-10 px-6">
-        <h1 className="text-4xl text-center font-light mb-6">Collections</h1>
-        <div className="flex justify-center mb-9 ">
+        <h1 className="text-4xl text-center font-light mb-6">
+          Collections
+        </h1>
+
+        {/* Search Bar */}
+        <div className="flex justify-center mb-9">
           <input
             type="text"
             placeholder="Enter Title to Search"
@@ -54,21 +63,20 @@ function Books() {
           />
         </div>
 
-        <div className="grid sm:grid-cols-1 md:grid-cols-12">
-          <div className="col-span-2">
-            <div className="flex justify-between">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
+          {/* Category Filters */}
+          <div className="md:col-span-2">
+            <div className="flex justify-between items-center">
               <h1 className="text-xl">Filters</h1>
               <GiHamburgerMenu className="text-xl" />
             </div>
+
             <div className="my-3 flex flex-col gap-2">
               <label>
                 <input
                   type="radio"
-                  onClick={() => {
-                    filterBooks("");
-                  }}
                   name="filter"
-                  id=""
+                  onChange={() => filterBooks("")}
                 />{" "}
                 No-Filter
               </label>
@@ -77,40 +85,45 @@ function Books() {
                 <label key={item}>
                   <input
                     type="radio"
-                    onClick={() => {
-                      filterBooks(item);
-                    }}
                     name="filter"
-                    id=""
+                    onChange={() => filterBooks(item)}
                   />{" "}
                   {item}
                 </label>
               ))}
             </div>
           </div>
-          <div className="col-span-10 py-5">
+
+          {/* Book Cards */}
+          <div className="md:col-span-10 py-5">
             {booklist.length > 0 ? (
-              <div className="w-full flex flex-wrap justify-around">
+              <div className="w-full flex flex-wrap justify-center gap-8">
                 {booklist.map((item) => (
-                  <div clasName="w-64">
+                  <div
+                    className="w-64 shrink-0"
+                    key={item._id}
+                  >
                     <img
                       src={item?.imageUrl}
-                      alt="Harry Potter"
-                      className="h-80 w-full object-cover rounded-lg"
+                      alt={item?.title}
+                      className="h-80 w-full object-cover rounded-lg transition duration-300 hover:scale-105"
                     />
-                    <h1 className="text-center my-2">{item?.title}</h1>
-                    <h1 className="bg-black text-white rounded-lg text-center">
+
+                    <h1 className="text-center my-2">
+                      {item?.title}
+                    </h1>
+
+                    <h1 className="bg-black text-white rounded-lg text-center py-2">
                       &#8377;{item?.price}
                     </h1>
                   </div>
                 ))}
-                {/* card */}
               </div>
             ) : (
               <div className="w-full flex justify-center items-center">
                 <img
                   src="https://i.pinimg.com/originals/82/eb/0e/82eb0e1d6bea3ea0627a897f9bb8eb15.gif"
-                  alt="No Books"
+                  alt="No Books Available"
                   className="h-100"
                 />
               </div>
@@ -118,6 +131,7 @@ function Books() {
           </div>
         </div>
       </div>
+
       <Footer />
     </>
   );
