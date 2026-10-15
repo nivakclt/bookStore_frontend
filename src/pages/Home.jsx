@@ -5,10 +5,16 @@ import Footer from "../User/pages/components/Footer";
 import { FaSearch } from "react-icons/fa";
 
 import { latestBookApi } from "../services/allApis";
+import { useNavigate } from "react-router-dom";
+import { searchContext } from "../contextapi/Sharedcontext";
+import { useContext } from "react";
+import { ToastContainer,toast } from "react-toastify";
 
 function Home() {
   const [loadStatus, setLoadStatus] = useState(true);
   const [latest,setLatest]=useState([])
+  const [search,setSearch]=useContext(searchContext)
+  const nav=useNavigate()
 
   useEffect(() => {
     setTimeout(() => {
@@ -16,6 +22,20 @@ function Home() {
     }, 2000);
     handleLatestBook()
   }, []);
+
+  const handleSearchNavigate=()=>{
+    if(sessionStorage.getItem('token'))
+    {
+      if(search!=""){
+        nav('/books')
+      }else{
+        toast.warning("Enter valid Input!!")
+      }
+    }
+  else{
+    toast.error("Please Login Here!!")
+  }
+  }
 
   const handleLatestBook=async()=>{
     const response =  await  latestBookApi()
@@ -59,12 +79,20 @@ function Home() {
 
       <div className="relative mt-10">
         <input
+        value={search}
+        onChange={(e)=>setSearch(e.target.value)}
           type="text"
           placeholder="Search books..."
           className="w-[300px] md:w-[450px] bg-white/95 text-black rounded-full px-6 py-3 outline-none"
         />
-
-        <FaSearch className="absolute right-5 top-1/2 -translate-y-1/2 text-gray-500" />
+        
+<button
+  onClick={handleSearchNavigate}
+  className="absolute right-5 top-1/2 -translate-y-1/2 text-gray-500"
+>
+  <FaSearch />
+</button>
+F
       </div>
 
     </div>
@@ -175,6 +203,7 @@ function Home() {
                 atmosphere inspires me to explore new genres and authors."
               </p>
             </section>
+            <ToastContainer position="top-center"/>
           </div>
           <Footer />
         </>

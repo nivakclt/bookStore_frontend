@@ -96,7 +96,7 @@ function Profile() {
 
       {/* Profile Section */}
       <div className="w-full">
-        <div className="h-[30vh] bg-gray-300 relative">
+        <div className="h-[30vh] bg-gray-900 relative">
           <div className="absolute -bottom-20 left-10">
             {!dp ? (
               <img

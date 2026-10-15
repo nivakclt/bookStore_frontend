@@ -5,15 +5,25 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { useEffect, useState } from "react";
 import { bookListApi } from "../../services/allApis";
 
+import { searchContext } from "../../contextapi/Sharedcontext";
+import { useContext } from "react";
+import { Link } from "react-router-dom";
+
 function Books() {
   const [booklist, setBookList] = useState([]);
   const [filters, setFilters] = useState([]);
   const [dummylist, setDummyList] = useState([]);
+  const [search,setSearch]=useContext(searchContext)
 
-  const handleSearch=(keyword)=>{
-    const books=dummylist.filter(item=>item.title.toLowerCase().includes(keyword.toLowerCase()))
+  const handleSearch=()=>{
+    const books=dummylist.filter(item=>item.title.toLowerCase().includes(search.toLowerCase()))
     setBookList(books)
   }
+
+  useEffect(()=>{
+    handleSearch()
+  },[search])
+
 
   useEffect(() => {
     if (sessionStorage.getItem("token")) {
@@ -62,7 +72,8 @@ function Books() {
         {/* Search Bar */}
         <div className="flex justify-center mb-9">
           <input
-          onChange={(e)=>{handleSearch(e.target.value)}}
+          value={search}
+          onChange={(e)=>{setSearch(e.target.value)}}
             type="text"
             placeholder="Enter Title to Search"
             className="px-5 py-2 outline-1 w-[50%] rounded-full border border-gray-300"
@@ -109,11 +120,12 @@ function Books() {
                     className="w-64 shrink-0"
                     key={item._id}
                   >
+                    <Link to={`/book/$(item?._id)`}>
                     <img
                       src={item?.imageUrl}
                       alt={item?.title}
                       className="h-80 w-full object-cover rounded-lg transition duration-300 hover:scale-105"
-                    />
+                    /></Link>
 
                     <h1 className="text-center my-2">
                       {item?.title}

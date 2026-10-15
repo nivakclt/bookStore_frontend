@@ -50,3 +50,8 @@ export const deleteBookApi=async(id)=>{
 export const purchasedBookApi=async()=>{
     return await apiService("GET",'/purchased-books')
 }
+
+// bookbyid
+export const BookByIdApi=async(bid)=>{
+    return await apiService("GET",`/book/${bid}`)
+}
