@@ -5,14 +5,12 @@ import { BookByIdApi } from "../../services/allApis"
 import { useParams } from "react-router-dom"
 import { FaEye } from "react-icons/fa"
 import Modal from "./components/Modal"
-import axiosInstance from "../../api/axiosInstance"
-
 
 function BookDetails() {
 
   const[bookDetail,setBookDetail]=useState({})
-const [isOpen, setIsOpen] = useState(false);
-const [images, setImages] = useState([]);
+  const [isOpen, setIsOpen] = useState(false);
+
 
   const {bid}=useParams()
 
@@ -69,11 +67,9 @@ const [images, setImages] = useState([]);
 
       </div>
       </div>
-         <Modal
-        isOpen={isOpen}
+      <Modal  isOpen={isOpen}
         onClose={() => setIsOpen(false)}
-        images={bookDetail?.uploadedImages}
-      />
+        images={bookDetail?.uploadedImages}/>
     <Footer/>
     </>
   )
