@@ -120,7 +120,7 @@ function Books() {
                     className="w-64 shrink-0"
                     key={item._id}
                   >
-                    <Link to={`/book/$(item?._id)`}>
+                    <Link to={`/book/${item?._id}`}>
                     <img
                       src={item?.imageUrl}
                       alt={item?.title}
