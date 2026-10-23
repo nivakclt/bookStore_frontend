@@ -17,6 +17,9 @@ import Settings from './Admin/pages/Settings'
 import Pnf from './pages/Pnf'
 import About from './pages/About'
 
+import PaymentFailed from './User/pages/PaymentFailed'
+import PaymentSuccess from './User/pages/PaymentSuccess'
+
 function App() {
   
 
@@ -38,6 +41,10 @@ function App() {
       <Route path='admin' element={<Dashboard/>}/>
       <Route path='admin/resources' element={<Resources/>}/>
       <Route path='admin/settings' element={<Settings/>}/>
+
+      <Route path='success' element={<PaymentSuccess/>}/>
+      <Route path='failed' element={<PaymentFailed/>}/>
+
 
       <Route path='/*' element={<Pnf/>}/>
     </Routes>

@@ -4,11 +4,15 @@ import { FaCaretUp } from "react-icons/fa";
 import { FaCaretDown } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import axiosInstance from "../../../api/axiosInstance";
+import { useNavigate } from "react-router-dom";
+
 function Header() {
   const [dropdown, setDropdown] = useState(false);
   const [token, setToken] = useState("");
   const [dp, setDp] = useState("");
   const[userName,setUserName]=useState("")
+
+  const nav = useNavigate()
 
   useEffect(() => {
     if (sessionStorage.getItem("token") && sessionStorage.getItem("user")) {
@@ -19,6 +23,11 @@ function Header() {
       setUserName(userobj.username || "")
     }
   }, [token]);
+
+  const logout = () =>{
+    sessionStorage.clear()
+    nav('/auth')
+  }
 
   return (
     <>
@@ -79,7 +88,7 @@ function Header() {
                   <Link to={"/profile"} className=" py-1">
                     Profile
                   </Link>
-                  <p className="text-red-800 py-1">Logout</p>
+                  <p className="text-red-800 py-1" onClick={logout}>Logout</p>
                 </div>
               )}
             </div>

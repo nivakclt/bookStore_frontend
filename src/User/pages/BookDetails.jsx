@@ -5,6 +5,7 @@ import { BookByIdApi } from "../../services/allApis"
 import { useParams } from "react-router-dom"
 import { FaEye } from "react-icons/fa"
 import Modal from "./components/Modal"
+import { loadStripe } from "@stripe/stripe-js"
 
 function BookDetails() {
 
@@ -31,6 +32,11 @@ function BookDetails() {
     handleBook()
   },[])
   
+  const handlePurchase = async(book)=>{
+    console.log(book)
+    const strip = await loadStripe(import.meta.env.VITE_STRIPE_PK)
+    console.log(strip)
+  }
   return (
     <>
     <Header/>
@@ -61,7 +67,7 @@ function BookDetails() {
             {bookDetail?.abstract}
           </div>
           <div className="flex justify-center">
-          <button className="bg-green-500 p-3 rounded">Buy Now !<span className="text-yellow-400">{bookDetail?.discountPrice}</span></button>
+          <button className="bg-green-500 p-3 rounded" onClick={()=>handlePurchase(bookDetail)}>Buy Now !<span className="text-yellow-400">{bookDetail?.discountPrice}</span></button>
           </div>
         </div>
 
