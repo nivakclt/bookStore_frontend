@@ -55,3 +55,8 @@ export const purchasedBookApi=async()=>{
 export const BookByIdApi = (bid) => {
   return apiService("GET", `/book/${bid}`)
 }
+
+// book payment
+export const bookPaymentApi = async (id) => {
+  return await apiService("GET", `/payment/${id}`)
+}

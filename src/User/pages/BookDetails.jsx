@@ -1,11 +1,12 @@
 import Header from "./components/Header"
 import Footer from "./components/Footer"
 import { useEffect,useState } from "react"
-import { BookByIdApi } from "../../services/allApis"
+import { BookByIdApi,bookPaymentApi } from "../../services/allApis"
 import { useParams } from "react-router-dom"
 import { FaEye } from "react-icons/fa"
 import Modal from "./components/Modal"
 import { loadStripe } from "@stripe/stripe-js"
+
 
 function BookDetails() {
 
@@ -36,6 +37,9 @@ function BookDetails() {
     console.log(book)
     const strip = await loadStripe(import.meta.env.VITE_STRIPE_PK)
     console.log(strip)
+
+    const response = await bookPaymentApi(book._id)
+    console.log(response)
   }
   return (
     <>
