@@ -1,14 +1,29 @@
 import AdminHeader from "./components/AdminHeader";
 import AdminSidebar from "./components/AdminSidebar";
 import Footer from "../../User/pages/components/Footer";
+import { adminAllBooksApi } from "../../services/allApis";
+import { useEffect } from "react";
 
 import { useState } from "react";
 
 function Resources() {
 
   const [toggle, setToggle] = useState(true);
+  const[allBooks,setAllBooks]=useState([])
   const trueStyle = "border-t-1 border-s-1 border-e-1  p-3";
   const falseStyle = "border-b-1 p-3";
+
+  const handleAllBooks= async()=>{
+    const response=await adminAllBooksApi()
+    console.log(response)
+    if(response.status===200){
+      setAllBooks(response.data)
+    }
+}
+useEffect(()=>{
+  handleAllBooks()
+},[])
+
   return (
     
     <>
@@ -38,16 +53,41 @@ function Resources() {
             toggle ? 
               <div className="w-full">
                 {/* books */}
-                 <div className='w-full flex flex-wrap justify-around gap-2'>
-                {/* card */}
-                <div className="w-[16rem] shadow-2xl text-center">
-                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRA539xYtxbtfoXg1yG4tsKK04wyVfkZfCY6LQHQeYFRV0oc6u_E1GZKaV5&s=10"
-                                alt="Harry Potter" className='h-80 w-full object-cover rounded-lg'/>
-                                <h1 className='text-center my-2 bg-black text-white'>Harry Potter</h1>
-                                <h1 className='bg-black text-white text-center'>$19.99</h1>
-                                <button className="text-green-500">Approved</button>
-                              </div>
-              </div>
+{
+  allBooks.length > 0 ? (
+    <div className="w-full flex flex-wrap justify-around gap-2">
+      {
+        allBooks.map((item) => (
+          <div
+            key={item._id}
+            className="w-[16rem] shadow-2xl text-center"
+          >
+            <img
+  src={item?.imageUrl}
+  alt={item?.title}
+  className="h-80 w-full object-cover rounded-lg"
+/>
+
+            <h1 className="text-center my-2 bg-black text-white">
+             {item?.title}
+            </h1>
+
+            <h1 className="bg-black text-white text-center">
+              {item?.price}
+            </h1>
+
+            <button className="text-green-500">
+              Approved
+            </button>
+          </div>
+        ))
+      }
+    </div>
+  ) : (
+    <h1>No Books Available</h1>
+  )
+}
+                
               </div>
              : 
               <div className="w-full">

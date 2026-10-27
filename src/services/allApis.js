@@ -60,3 +60,8 @@ export const BookByIdApi = (bid) => {
 export const bookPaymentApi = async (id) => {
   return await apiService("GET", `/payment/${id}`)
 }
+
+// admin all book list
+export const adminAllBooksApi=async()=>{
+    return await apiService("GET",'admin/allbooks')
+}

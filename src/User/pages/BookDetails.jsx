@@ -5,7 +5,9 @@ import { BookByIdApi,bookPaymentApi } from "../../services/allApis"
 import { useParams } from "react-router-dom"
 import { FaEye } from "react-icons/fa"
 import Modal from "./components/Modal"
-import { loadStripe } from "@stripe/stripe-js"
+// import { loadStripe } from "@stripe/stripe-js"
+import { toast } from "react-toastify/unstyled"
+import { ToastContainer } from "react-toastify"
 
 
 function BookDetails() {
@@ -35,11 +37,19 @@ function BookDetails() {
   
   const handlePurchase = async(book)=>{
     console.log(book)
-    const strip = await loadStripe(import.meta.env.VITE_STRIPE_PK)
-    console.log(strip)
+    // const strip = await loadStripe(import.meta.env.VITE_STRIPE_PK)
+    // console.log(strip)
 
     const response = await bookPaymentApi(book._id)
     console.log(response)
+    if(response.status===200){
+      const checkoutURL=response.data?.url
+      window.location.href=checkoutURL
+    }
+    else{
+      toast.warning("Something went Wrong")
+    }
+
   }
   return (
     <>
@@ -80,6 +90,7 @@ function BookDetails() {
       <Modal  isOpen={isOpen}
         onClose={() => setIsOpen(false)}
         images={bookDetail?.uploadedImages}/>
+        <ToastContainer position="top-center"/>
     <Footer/>
     </>
   )
