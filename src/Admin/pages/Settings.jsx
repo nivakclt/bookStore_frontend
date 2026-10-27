@@ -1,10 +1,33 @@
 import AdminHeader from "./components/AdminHeader";
 import AdminSidebar from "./components/AdminSidebar";
 import Footer from "../../User/pages/components/Footer";
+import { useEffect,useState } from "react";
 
 import { FaRegEdit } from "react-icons/fa";
 
 function Settings() {
+
+  const[profile,setProfile]=useState({
+  username:"",password:"",picture:""})
+  const[preview,setPreview]=useState("")
+
+  useEffect(()=>{
+    if(sessionStorage.getItem('token')&&sessionStorage.getItem('user')){
+      const user=JSON.parse(sessionStorage.getItem('user'))
+      setProfile({...profile,username:user?.username,picture:user?.picture})
+    }
+  },[])
+
+  const handleProfileEdit=()=>{
+    console.log(profile)
+  }
+  const handleFileUpload=(e)=>{
+    const file = e.target.value.file[0]
+    setProfile({...profile,picture:file})
+    setPreview(URL.createObjectURL(file))
+  }
+
+
   return (
     <>
       <AdminHeader />
@@ -43,10 +66,10 @@ function Settings() {
               <div className="h-full bg-gray-900 p-4 mx-2 rounded-lg">
                 <div className="flex flex-col items-center">
                   <label htmlFor="profpic" className="relative">
-                    <input type="file" id="profpic" className="hidden" />
+                    <input type="file" onChange={(e)=>{handleFileUpload(e)}} id="profpic" className="hidden" />
 
                     <img
-                      src="https://cdn-icons-png.flaticon.com/512/12225/12225935.png"
+                      src={(profile.picture?profile.picture:"https://cdn-icons-png.flaticon.com/512/12225/12225935.png")}
                       alt="logo"
                       className="h-62.5"
                     />
@@ -56,16 +79,22 @@ function Settings() {
                   </label>
 
                   <input
+                  value={profile?.username}
+                  onChange={(e)=>{setProfile({...profile,username:e.target.value})}}
                     type="text"
                     placeholder="Username"
                     className="w-full bg-white border my-3 p-2 rounded"
                   />
                   <input
+                  value={profile?.password}
+                  onChange={(e)=>{setProfile({...profile,password:e.target.value})}}
                     type="password"
                     placeholder="Password"
                     className="w-full bg-white border my-3 p-2 rounded"
                   />
                   <input
+                  value={profile?.password}
+                  onChange={(e)=>{setProfile({...profile,password:e.target.value})}}
                     type="password"
                     placeholder="Confirm Password"
                     className="w-full bg-white border my-3 p-2 rounded"
@@ -76,7 +105,7 @@ function Settings() {
                       RESET
                     </button>
 
-                    <button className=" bg-red-600 text-white p-3 rounded hover:bg-red-700">
+                    <button onClick={handleProfileEdit} className=" bg-red-600 text-white p-3 rounded hover:bg-red-700">
                       UPDATE
                     </button>
                   </div>

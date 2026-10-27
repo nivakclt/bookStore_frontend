@@ -65,3 +65,18 @@ export const bookPaymentApi = async (id) => {
 export const adminAllBooksApi=async()=>{
     return await apiService("GET",'admin/allbooks')
 }
+
+// admin approve book
+export const adminApproveBookApi=async(id)=>{
+    return await apiService("GET",`admin/approve/${id}`)
+}
+// admin All users list 
+export const adminAllUsersApi=async()=>{
+    return await apiService("GET",'admin/allusers')
+}
+
+// admin profile update
+export const adminProfileUpdate=async(data)=>{
+        return await apiService("PUT",'admin/profile-update',data)
+
+}
