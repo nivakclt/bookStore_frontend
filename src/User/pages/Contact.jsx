@@ -2,8 +2,37 @@ import { IoIosSend } from "react-icons/io";
 import { FaLocationDot, FaPhone, FaEnvelope } from "react-icons/fa6";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import { useRef } from "react";
+import emailjs from '@emailjs/browser';
+import { ToastContainer,toast } from "react-toastify";
 
 function Contact() {
+    const form = useRef();
+    const PUBLIC_KEY=import.meta.env.VITE_PUBLIC_KEY
+    const SERVICE_ID=import.meta.env.VITE_SERVICE_KEY
+    const TEMPLATE_ID=import.meta.env.VITE_TEMPLATE_KEY
+
+
+    const handleSubmit=(e)=>{
+      e.preventDefault()
+      const{user_name,user_email,message}=form.current
+      if(user_email && user_name && message){
+        emailjs.sendForm('SERVICE_KEY', 'TEMPLATE_KEY', form.current, {
+        publicKey: 'PUBLIC_KEY'}).then(()=>{
+          console.log('success')
+          toast.success('Thank you for your message!');
+          form.current.reset()
+        })
+        .catch((error) => {
+          console.error('FAILED...',+error.text);
+          toast.warning('FAILED...', error.text);
+        })
+      }
+      else{
+        toast.warning("Enter Valid Inputs")
+      }
+       
+    }
   return (
     <>
       <Header />
@@ -63,37 +92,46 @@ function Contact() {
         <div className="grid md:grid-cols-2 gap-8">
 
           {/* Form */}
-          <div className="border rounded-xl p-8">
-            <h2 className="text-2xl font-light mb-6 text-center">
-              Send Us a Message
-            </h2>
+         
+<form ref={form}>
+  <div className="border rounded-xl p-8">
+    <h2 className="text-2xl font-light mb-6 text-center">
+      Send Us a Message
+    </h2>
 
-            <input
-              type="text"
-              placeholder="Name"
-              className="w-full border rounded-md p-3 mb-4 outline-none"
-            />
+    <input
+      name="user_name"
+      type="text"
+      placeholder="Name"
+      required
+      className="w-full border rounded-md p-3 mb-4 outline-none"
+    />
 
-            <input
-              type="email"
-              placeholder="Email"
-              className="w-full border rounded-md p-3 mb-4 outline-none"
-            />
+    <input
+      name="user_email"
+      type="email"
+      placeholder="Email"
+      required
+      className="w-full border rounded-md p-3 mb-4 outline-none"
+    />
 
-            <textarea
-              rows="5"
-              placeholder="Message"
-              className="w-full border rounded-md p-3 mb-4 outline-none"
-            ></textarea>
+    <textarea
+      name="message"
+      rows="5"
+      placeholder="Message"
+      required
+      className="w-full border rounded-md p-3 mb-4 outline-none"
+    ></textarea>
 
-            <button className="w-full border border-black py-3 rounded-md flex justify-center items-center gap-2 hover:bg-black hover:text-white transition">
-              Send Message
-              <IoIosSend />
-            </button>
-          </div>
-
-
-
+    <button
+      type="submit" onSubmit={(e)=>handleSubmit(e)}
+      className="w-full border border-black py-3 rounded-md flex justify-center items-center gap-2 hover:bg-black hover:text-white transition"
+    >
+      Send Message
+      <IoIosSend />
+    </button>
+  </div>
+</form>
           {/* Map */}
           <div className="border rounded-xl overflow-hidden min-h-112">
             <iframe
@@ -108,7 +146,7 @@ function Contact() {
 
         </div>
       </section>
-
+      <ToastContainer position="top-center"/>
       <Footer />
     </>
   );

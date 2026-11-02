@@ -76,7 +76,7 @@ export const adminAllUsersApi=async()=>{
 }
 
 // admin profile update
-export const adminProfileUpdate=async(data)=>{
+export const adminProfileEditApi=async(data)=>{
         return await apiService("PUT",'admin/profile-update',data)
 
 }

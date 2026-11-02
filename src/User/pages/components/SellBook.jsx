@@ -1,6 +1,7 @@
-import {useState} from 'react'
+import {useState,useEffect} from 'react'
 import { toast,ToastContainer } from 'react-toastify';
 import { FaPlus } from 'react-icons/fa'
+import UseDebounce from '../../../hooks/UseDebounce';
 
 import { addBookApi } from '../../../services/allApis'
 
@@ -11,6 +12,7 @@ function SellBook() {
     })
     const [preview,setPreview]=useState("")
     const[previewList,setPreviewList]=useState([])
+    const debouncedTitleSearch=UseDebounce(book.title,1000)
 
     const handleFileUpload=(e)=>{
         const fileBlob = e.target.files[0]
@@ -58,7 +60,12 @@ function SellBook() {
         }
     }
 }
-    
+    useEffect(() => {
+        if (debouncedTitleSearch) {
+            console.log("API Call with title:");
+        }
+    }, [debouncedTitleSearch]);
+
   return (
     <div className='bg-gray-900 rounded-lg text-white m-20'>
           <h1 className='text-2xl text-center my-2 py-3 flex justify-center'>Book Details</h1>
