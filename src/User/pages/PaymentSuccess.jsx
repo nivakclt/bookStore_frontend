@@ -12,7 +12,7 @@ function PaymentSuccess() {
           <img
             src="https://cdn3d.iconscout.com/3d/premium/thumb/payment-success-3d-icon-png-download-10020025.png"
             alt="Payment successful"
-            className="w-[300px]"
+            className="w-75"
           />
 
           <Link
