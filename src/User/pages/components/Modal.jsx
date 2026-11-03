@@ -1,4 +1,4 @@
-import axiosInstance from "../../../services/axiosInstance";
+import axiosInstance from "../../../api/axiosInstance";
 
 const Modal = ({ isOpen, onClose, images }) => {
   if (!isOpen) return null;
