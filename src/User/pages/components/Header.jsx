@@ -43,7 +43,7 @@ const { role, setRole, authUser, setAuthUser } = useContext(authContext);
           <img
             src="/logo.png"
             alt="logo"
-            className="w-[90px] h-[90px] rounded-full"
+            className="w-22.5 h-22.5 rounded-full"
           />
           <div className="flex flex-col items-center">
             <h1 className="text-2xl font-bold" id="metallic-text">
@@ -78,7 +78,7 @@ const { role, setRole, authUser, setAuthUser } = useContext(authContext);
                 dp.includes("lh3.googleusercontent.com") ?
                 <img src={dp} alt="" width={'50px'} className="rounded-full"/>
                 :
-                <img src={`${axiosInstance.defaults.baseURL}/uploads/${dp}`} alt="" width={'40px'}  className="h-[40px] rounded-full"/>
+                <img src={`${axiosInstance.defaults.baseURL}/uploads/${dp}`} alt="" width={'40px'}  className="h-10 rounded-full"/>
               }{
                 userName=="" ?
                 <>User{' '}</>
