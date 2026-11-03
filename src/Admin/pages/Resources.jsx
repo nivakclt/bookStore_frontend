@@ -1,15 +1,12 @@
-
 import AdminHeader from "./components/AdminHeader";
 import AdminSidebar from "./components/AdminSidebar";
 import Footer from "../../User/pages/components/Footer";
 import { adminAllBooksApi, adminApproveBookApi, adminAllUsersApi } from "../../services/allApis";
-import { useEffect } from "react";
-import { ToastContainer } from "react-toastify";
-import { useState } from "react";
-import { toast } from "react-toastify";
-import axiosInstance from "../../api/axiosInstance"
-function Resources() {
+import { useEffect, useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import axiosInstance from "../../api/axiosInstance.js";
 
+export default function Resources() {
   const [toggle, setToggle] = useState(true);
   const [allBooks, setAllBooks] = useState([]);
   const [allUsers, setAllUsers] = useState([]);
@@ -17,30 +14,30 @@ function Resources() {
   const falseStyle = "border-b-1 p-3";
 
   const handleAllBooks = async () => {
-    try{
-    const response = await adminAllBooksApi();
-    console.log(response);
-    if (response.status === 200) {
-      setAllBooks(response.data);
+    try {
+      const response = await adminAllBooksApi();
+      console.log(response);
+      if (response.status === 200) {
+        setAllBooks(response.data);
+      }
+    } catch (error) {
+      console.error("Error fetching all books:", error);
     }
-  } catch (error) {
-    console.error("Error fetching all books:", error);
-  }
-};
+  };
 
   const handleApprovedBook = async (id) => {
-    try{
-    const response = await adminApproveBookApi(id);
-    if (response.status === 200) {
-      handleAllBooks();
-    } else {
-      toast.warning("Something went wrong");
+    try {
+      const response = await adminApproveBookApi(id);
+      if (response.status === 200) {
+        handleAllBooks();
+      } else {
+        toast.warning("Something went wrong");
+      }
+    } catch (error) {
+      console.error("Error approving book:", error);
+      toast.error("Error approving book");
     }
-  } catch (error) {
-    console.error("Error approving book:", error);
-    toast.error("Error approving book");
-  }
-};
+  };
 
   const handleAllUsers = async () => {
     try {
@@ -190,5 +187,3 @@ function Resources() {
     </>
   );
 }
-
-export default Resources;
