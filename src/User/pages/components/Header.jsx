@@ -5,6 +5,8 @@ import { FaCaretDown } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import axiosInstance from "../../../api/axiosInstance";
 import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { authContext } from "../../../contextapi/AuthContext";
 
 function Header() {
   const [dropdown, setDropdown] = useState(false);
@@ -13,7 +15,7 @@ function Header() {
   const[userName,setUserName]=useState("")
 
   const nav = useNavigate()
-
+const { role, setRole, authUser, setAuthUser } = useContext(authContext);
   useEffect(() => {
     if (sessionStorage.getItem("token") && sessionStorage.getItem("user")) {
       const userToken = sessionStorage.getItem("token");
@@ -24,10 +26,15 @@ function Header() {
     }
   }, [token]);
 
-  const logout = () =>{
-    sessionStorage.clear()
-    nav('/auth')
-  }
+  const logout = () => {
+  sessionStorage.clear();
+  setToken("");
+  setDp("");
+  setUserName("");
+  setAuthUser(false);
+  setRole("");
+  nav('/auth');
+};
 
   return (
     <>

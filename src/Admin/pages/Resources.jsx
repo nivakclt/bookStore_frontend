@@ -18,28 +18,39 @@ function Resources() {
   const falseStyle = "border-b-1 p-3";
 
   const handleAllBooks = async () => {
+    try{
     const response = await adminAllBooksApi();
     console.log(response);
     if (response.status === 200) {
       setAllBooks(response.data);
     }
-  };
+  } catch (error) {
+    console.error("Error fetching all books:", error);
+  }
+};
 
   const handleApprovedBook = async (id) => {
+    try{
     const response = await adminApproveBookApi(id);
-    console.log(response);
     if (response.status === 200) {
       handleAllBooks();
     } else {
       toast.warning("Something went wrong");
     }
-  };
+  } catch (error) {
+    console.error("Error approving book:", error);
+    toast.error("Error approving book");
+  }
+};
 
   const handleAllUsers = async () => {
-    const response = await adminAllUsersApi();
-    // console.log(response)
-    if (response.status === 200) {
-      setAllUsers(response.data);
+    try {
+      const response = await adminAllUsersApi();
+      if (response.status === 200) {
+        setAllUsers(response.data);
+      }
+    } catch (error) {
+      console.error("Error fetching all users:", error);
     }
   };
 

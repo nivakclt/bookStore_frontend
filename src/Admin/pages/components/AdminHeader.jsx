@@ -2,14 +2,16 @@
 import { CiPower } from "react-icons/ci"
 import { useNavigate } from "react-router-dom"
 import { ToastContainer,toast } from "react-toastify"
-
+import { authContext } from "../../../contextapi/AuthContext"
+import { useContext } from "react"
     
 function AdminHeader() {
   const nav = useNavigate()
-
+const { role, setRole, authUser, setAuthUser } = useContext(authContext)
   const handleLogout=()=>{
     toast.info("Logging out...")
     setTimeout(()=>{
+    setAuthUser(false)
     sessionStorage.clear()
     nav('/auth')
     },1500)

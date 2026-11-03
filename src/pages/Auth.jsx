@@ -15,12 +15,15 @@ import { jwtDecode } from "jwt-decode";
 
 import { useNavigate } from "react-router-dom";
 
+import { authContext } from "../contextapi/AuthContext";
+import { useContext } from "react";
+
 function Auth() {
   const [authStatus, setAuthStatus] = useState(false);
 
   const nav = useNavigate();
-
-  const handleRegister = async (data) => {
+  const { setRole, setAuthUser } = useContext(authContext); 
+   const handleRegister = async (data) => {
     const response = await userRegisterAPI(data);
     console.log(response);
     if (response.status === 201) {
@@ -39,20 +42,21 @@ function Auth() {
       sessionStorage.setItem("token",response.data.token)
       sessionStorage.setItem("user",JSON.stringify(response.data.user))
       toast.success("Login Successfully Completed")
+      setAuthUser(true)
       setTimeout(()=>{
-        if(response.data.user.role=="admin"){
+        if(response.data.user.role === "admin"){
+          setRole("admin")
           nav('/admin')
         }else{
+          setRole("user")
           nav('/')
         }
       },2000)
     }
   }
   catch(error){
-  {
       console.log(error)
       toast.error('Something went wrong')
-    }
   }
 }
 
@@ -66,11 +70,14 @@ function Auth() {
       sessionStorage.setItem("token",response.data.token)
       sessionStorage.setItem("user",JSON.stringify(response.data.user))
       toast.success("Login Successfull !!")
+      setAuthUser(true)
       setTimeout(()=>{
-      if(response.data.user.role==="admin"){
+      if(response.data.user.role === "admin"){
+        setRole("admin")
         nav('/admin')
       }
       else{
+        setRole("user")
         nav('/')
       }
     },2000)

@@ -48,16 +48,13 @@ function Books() {
   };
 
   const filterBooks = (filter) => {
-    if (filter) {
-      const filteredBooks = dummylist.filter(
-        (item) => item?.category === filter
-      );
+    const filteredBooks = dummylist.filter(item =>
+        (!filter || item.category === filter) &&
+        item.title.toLowerCase().includes(search.toLowerCase())
+    );
 
-      setBookList(filteredBooks);
-    } else {
-      setBookList(dummylist);
-    }
-  };
+    setBookList(filteredBooks);
+};
 
   return (
     <>

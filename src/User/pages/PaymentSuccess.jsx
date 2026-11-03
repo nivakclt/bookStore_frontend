@@ -2,7 +2,7 @@ import Footer from "./components/Footer"
 import { Link } from "react-router-dom"
 import Header from "./components/Header"
 
-function PaymentFailed() {
+function PaymentSuccess() {
   return (
     <>
       <Header />
@@ -29,4 +29,4 @@ function PaymentFailed() {
   )
 }
 
-export default PaymentFailed
+export default PaymentSuccess

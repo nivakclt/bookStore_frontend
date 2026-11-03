@@ -13,7 +13,7 @@ import {
   Tooltip,
   Legend,
 } from "recharts";
-import { generateMockData, RechartsDevtools } from "@recharts/devtools";
+import { RechartsDevtools } from "@recharts/devtools";
 import { ResponsiveContainer } from "recharts";
 import { Pie, PieChart } from "recharts";
 
@@ -76,7 +76,7 @@ function Dashboard() {
                 <GrUserWorker /> Total Number of Employees 100+
               </div>
             </div>
-            <div className="grid-md:grid-cols-2">
+            <div className="grid md:grid-cols-2">
               <div>
                 {/* Book purchase ratio -Bar chart */}
                 <ResponsiveContainer width={"100%"} height={"300"}>
@@ -95,11 +95,6 @@ function Dashboard() {
                     <YAxis width="auto" />
                     <Tooltip />
                     <Legend />
-                    <Bar
-                      dataKey="name"
-                      fill="#8B0000"
-                      radius={[10, 10, 0, 0]}
-                    />
                     <Bar
                       dataKey="count"
                       fill="#8B0000"

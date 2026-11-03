@@ -8,25 +8,29 @@ import { ToastContainer,toast } from "react-toastify";
 
 function Contact() {
     const form = useRef();
-    const PUBLIC_KEY=import.meta.env.VITE_PUBLIC_KEY
-    const SERVICE_ID=import.meta.env.VITE_SERVICE_KEY
-    const TEMPLATE_ID=import.meta.env.VITE_TEMPLATE_KEY
+   const PUBLIC_KEY = import.meta.env.VITE_PUBLIC_KEY
+const SERVICE_ID = import.meta.env.VITE_SERVICE_ID
+const TEMPLATE_ID = import.meta.env.VITE_TEMPLATE_ID
 
 
     const handleSubmit=(e)=>{
       e.preventDefault()
-      const{user_name,user_email,message}=form.current
+      const{user_name,user_email,message}=form.current.elements
       if(user_email && user_name && message){
-        emailjs.sendForm('SERVICE_KEY', 'TEMPLATE_KEY', form.current, {
-        publicKey: 'PUBLIC_KEY'}).then(()=>{
+        emailjs.sendForm(SERVICE_ID,TEMPLATE_ID, form.current, {
+        publicKey: PUBLIC_KEY}).then(()=>{
           console.log('success')
           toast.success('Thank you for your message!');
           form.current.reset()
         })
         .catch((error) => {
-          console.error('FAILED...',+error.text);
-          toast.warning('FAILED...', error.text);
-        })
+    console.log("EmailJS Error:", error);
+    console.log("Error message:", error?.message);
+    console.log("Error status:", error?.status);
+    console.log("Error text:", error?.text);
+
+    toast.error("Failed to send message!");
+});
       }
       else{
         toast.warning("Enter Valid Inputs")
@@ -93,7 +97,7 @@ function Contact() {
 
           {/* Form */}
          
-<form ref={form}>
+<form ref={form} onSubmit={handleSubmit}>
   <div className="border rounded-xl p-8">
     <h2 className="text-2xl font-light mb-6 text-center">
       Send Us a Message
@@ -124,7 +128,7 @@ function Contact() {
     ></textarea>
 
     <button
-      type="submit" onSubmit={(e)=>handleSubmit(e)}
+      type="submit"
       className="w-full border border-black py-3 rounded-md flex justify-center items-center gap-2 hover:bg-black hover:text-white transition"
     >
       Send Message

@@ -80,3 +80,9 @@ export const adminProfileEditApi=async(data)=>{
         return await apiService("PUT",'admin/profile-update',data)
 
 }
+
+// ai generated book summary
+export const generateBookDetailsApi=async(data)=>{
+    return await apiService("POST","/book/genai",data)
+}
+

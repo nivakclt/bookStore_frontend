@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom"
 import { FaEye } from "react-icons/fa"
 import Modal from "./components/Modal"
 // import { loadStripe } from "@stripe/stripe-js"
-import { toast } from "react-toastify/unstyled"
+import { toast } from "react-toastify"
 import { ToastContainer } from "react-toastify"
 
 
@@ -35,22 +35,22 @@ function BookDetails() {
     handleBook()
   },[])
   
-  const handlePurchase = async(book)=>{
-    console.log(book)
-    // const strip = await loadStripe(import.meta.env.VITE_STRIPE_PK)
-    // console.log(strip)
+  const handlePurchase = async (book) => {
+    try {
+        const response = await bookPaymentApi(book._id)
 
-    const response = await bookPaymentApi(book._id)
-    console.log(response)
-    if(response.status===200){
-      const checkoutURL=response.data?.url
-      window.location.href=checkoutURL
+        if (response.status === 200) {
+            const checkoutURL = response.data?.url
+            window.location.href = checkoutURL
+        } else {
+            toast.warning("Something went Wrong")
+        }
+    } catch (error) {
+        toast.warning("Something went Wrong")
+        console.log(error)
     }
-    else{
-      toast.warning("Something went Wrong")
-    }
+}
 
-  }
   return (
     <>
     <Header/>

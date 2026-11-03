@@ -37,13 +37,18 @@ function Home() {
   }
   }
 
-  const handleLatestBook=async()=>{
-    const response =  await  latestBookApi()
-    console.log(response)
-    if(response.status===200){
-      setLatest(response.data)
+  const handleLatestBook = async () => {
+  try {
+    const response = await latestBookApi();
+    console.log(response);
+
+    if (response.status === 200) {
+      setLatest(response.data);
     }
+  } catch (error) {
+    console.log(error);
   }
+};
 
   return (
     <>
@@ -92,7 +97,7 @@ function Home() {
 >
   <FaSearch />
 </button>
-F
+
       </div>
 
     </div>

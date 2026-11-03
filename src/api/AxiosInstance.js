@@ -3,7 +3,7 @@ import axios from 'axios'
 // create an axios instance with base URL and timeout
 const axiosInstance = axios.create({
     baseURL: "http://localhost:3000",
-    timeout: 5000
+    timeout: 3000
 })
 
 // request interceptor rejects the request if the token is not present in the local storage
