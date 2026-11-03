@@ -21,7 +21,7 @@ import PaymentSuccess from "./User/pages/PaymentSuccess";
 import { useContext } from "react";
 import { authContext } from "./contextapi/AuthContext";
 function App() {
-const { role, setRole, authUser, setAuthUser } = useContext(authContext);
+const { role, authUser } = useContext(authContext);
   return (
     <>
       <Routes>

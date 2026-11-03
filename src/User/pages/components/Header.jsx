@@ -3,10 +3,10 @@ import { Link } from "react-router-dom";
 import { FaCaretUp } from "react-icons/fa";
 import { FaCaretDown } from "react-icons/fa";
 import { useEffect, useState } from "react";
-import axiosInstance from "../../../api/axiosInstance";
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { authContext } from "../../../contextapi/AuthContext";
+import axiosInstance from "../../../api/axiosInstance"
 
 function Header() {
   const [dropdown, setDropdown] = useState(false);

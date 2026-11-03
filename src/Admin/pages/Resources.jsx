@@ -7,8 +7,7 @@ import { useEffect } from "react";
 import { ToastContainer } from "react-toastify";
 import { useState } from "react";
 import { toast } from "react-toastify";
-import axiosInstance from "../../api/axiosInstance";
-
+import axiosInstance from "../../api/axiosInstance"
 function Resources() {
 
   const [toggle, setToggle] = useState(true);

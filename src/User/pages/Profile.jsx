@@ -5,7 +5,7 @@ import { FaRegEdit } from "react-icons/fa";
 import { useState, useEffect } from "react";
 import Profileupdate from "./components/Profileupdate";
 import SellBook from "./components/SellBook";
-import axiosInstance from "../../../src/api/axiosInstance";
+import axiosInstance from "../../api/axiosInstance"
 import {
   userAddedBooksApi,
   deleteBookApi,
