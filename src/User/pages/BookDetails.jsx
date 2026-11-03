@@ -1,10 +1,10 @@
-import Header from "./components/Header"
-import Footer from "./components/Footer"
+import Header from "../pages/components/Header"
+import Footer from "../pages/components/Footer"
 import { useEffect,useState } from "react"
 import { BookByIdApi,bookPaymentApi } from "../../services/allApis"
 import { useParams } from "react-router-dom"
 import { FaEye } from "react-icons/fa"
-import Modal from "./components/Modal"
+import Modal from "../pages/components/Modal"
 // import { loadStripe } from "@stripe/stripe-js"
 import { toast } from "react-toastify"
 import { ToastContainer } from "react-toastify"
@@ -57,7 +57,7 @@ function BookDetails() {
     <div className="bg-gray-50 py-10 md:px-10 min-h-[70vh]">
       <div className="grid grid-cols-5">
         <div className="p-3 justify-center items-center">
-        <img src={bookDetail?.imageUrl} alt="bookimg" className="p-3 w-full h-[350px] object-contain" />        </div>
+        <img src={bookDetail?.imageUrl} alt="bookimg" className="p-3 w-full h-87.5 object-contain" />        </div>
         <div className="col-span-4 p-3">
           <div className="flex justify-between">
           <h1 className="text-xl font-bold">{bookDetail?.title}</h1>
