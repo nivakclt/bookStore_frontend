@@ -4,7 +4,7 @@ import Footer from "../../User/pages/components/Footer";
 import { adminAllBooksApi, adminApproveBookApi, adminAllUsersApi } from "../../services/allApis";
 import { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
-import axiosInstance from "../../api/axiosInstance.js";
+import axiosInstance from "../../api/AxiosInstance.js";
 
 export default function Resources() {
   const [toggle, setToggle] = useState(true);
