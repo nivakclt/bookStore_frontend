@@ -6,7 +6,7 @@ import { FaRegEdit } from "react-icons/fa";
 import { adminProfileEditApi } from "../../services/allApis";
 import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
-import axiosInstance from "../../api/axiosInstance.js";
+import axiosInstance from "../../api/AxiosInstance";
 import Footer from '../../User/pages/components/Footer'
 
 function Settings() {
