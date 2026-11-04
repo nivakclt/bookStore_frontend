@@ -24,7 +24,7 @@ const { role, setRole, authUser, setAuthUser } = useContext(authContext)
     <div className="w-full p-3 flex justify-between">
       <div className="flex gap-3 items-center">
         <img src="/logo.png" alt='logo' className='w-[60px]'/>
-        <h1 className="text-3xl">BOOKSTORE</h1>
+        <h1 className="text-3xl">BOOKSHELF</h1>
       </div>
       <button onClick={handleLogout} className="flex gap-1 items-center border rounded-lg p-3 hover:bg-black hover:text-white">
         Logout

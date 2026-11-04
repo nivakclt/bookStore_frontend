@@ -1,4 +1,9 @@
 @import "tailwindcss";
 *{
    font-family: "Bodoni Moda", serif;
+   
+}
+
+html {
+  scroll-behavior: smooth;
 }

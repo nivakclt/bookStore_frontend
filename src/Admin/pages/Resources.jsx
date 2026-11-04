@@ -1,3 +1,4 @@
+
 import AdminHeader from "./components/AdminHeader";
 import AdminSidebar from "./components/AdminSidebar";
 import Footer from "../../User/pages/components/Footer";
@@ -10,8 +11,8 @@ export default function Resources() {
   const [toggle, setToggle] = useState(true);
   const [allBooks, setAllBooks] = useState([]);
   const [allUsers, setAllUsers] = useState([]);
-  const trueStyle = "border-t-1 border-s-1 border-e-1 p-3";
-  const falseStyle = "border-b-1 p-3";
+  const trueStyle = "border-b-2 border-[#b49a7a] text-[#d6b995] px-6 py-3 font-semibold";
+  const falseStyle = "border-b-2 border-transparent text-[#aaa197] px-6 py-3 hover:text-[#f0ede6] transition duration-300";
 
   const handleAllBooks = async () => {
     try {
@@ -60,16 +61,20 @@ export default function Resources() {
       <AdminHeader />
 
       {/* Dashboard */}
-      <div className="w-full">
-        <div className="w-full h-full grid sm:grid-cols-1 md:grid-cols-12">
+      <div className="w-full bg-white text-black">
+        <div className="w-full min-h-screen grid sm:grid-cols-1 md:grid-cols-12">
+
           <div className="md:col-span-3">
             <AdminSidebar />
           </div>
 
-          <div className="md:col-span-9 p-3">
-            <h1 className="text-3xl text-center">Resources</h1>
+          <div className="md:col-span-9 p-4 md:p-6">
 
-            <div className="flex justify-center my-5">
+            <h1 className="text-2xl md:text-3xl text-center font-semibold tracking-wide text-[#f0ede6]">
+              Resources
+            </h1>
+
+            <div className="flex justify-center my-6 border-b border-[#45413b]">
               <button
                 className={toggle ? trueStyle : falseStyle}
                 onClick={() => setToggle(!toggle)}
@@ -87,63 +92,77 @@ export default function Resources() {
 
             {toggle ? (
               <div className="w-full">
+
                 {/* books */}
                 {allBooks.length > 0 ? (
-                  <div className="w-full flex flex-wrap justify-around gap-2">
+                  <div className="w-full flex flex-wrap justify-center gap-6">
+
                     {allBooks.map((item) => (
                       <div
                         key={item._id}
-                        className="w-[16rem] shadow-2xl text-center"
+                        className="w-[16rem] bg-black border rounded-xl overflow-hidden shadow-lg hover:border-[#b49a7a] hover:-translate-y-1 transition duration-300"
                       >
                         <img
                           src={item?.imageUrl}
                           alt={item?.title}
-                          className="h-80 w-full object-cover rounded-lg"
+                          className="h-80 w-full object-cover"
                         />
 
-                        <h1 className="text-center my-2 bg-black text-white">
-                          {item?.title}
-                        </h1>
+                        <div className="p-4 text-center">
 
-                        <h1 className="bg-black text-white text-center">
-                          {item?.price}
-                        </h1>
+                          <h1 className="my-2 text-[#f0ede6] font-semibold text-base">
+                            {item?.title}
+                          </h1>
 
-                        <button
-                          className="text-green-500"
-                          onClick={() => handleApprovedBook(item?._id)}
-                        >
-                          Approved
-                        </button>
+                          <h1 className="text-[#c4a77d] text-center font-semibold mb-4">
+                            Rs. {item?.price}
+                          </h1>
+
+                          <button
+                            className="w-full bg-green-500 text-white py-2 rounded-lg hover:bg-green-600 transition duration-300 font-medium"
+                            onClick={() => handleApprovedBook(item?._id)}
+                          >
+                            Approved
+                          </button>
+
+                        </div>
                       </div>
                     ))}
+
                   </div>
                 ) : (
-                  <h1>No Books Available</h1>
+                  <h1 className="text-center text-[#aaa197] py-16">
+                    No Books Available
+                  </h1>
                 )}
+
               </div>
             ) : (
               <div className="w-full">
+
                 {/* users */}
                 {allUsers.length > 0 ? (
-                  <div className="w-full flex flex-wrap justify-around">
+                  <div className="w-full flex flex-wrap justify-center gap-5">
+
                     {/* card */}
                     {allUsers.map((item) => (
                       <div
                         key={item._id}
-                        className="w-[20rem] border p-3 bg-gray-200"
+                        className="w-full sm:w-[20rem] border border-[#45413b] p-4 bg-[#292723] rounded-xl hover:border-[#668f7a] transition duration-300 shadow-md"
                       >
-                        <h1 className="text-center my-2">
+
+                        <h1 className="text-center my-2 text-[#8bb5a8] font-semibold text-sm break-all">
                           User ID: {item?._id}
                         </h1>
 
-                        <div className="flex gap-2">
+                        <div className="flex gap-3 items-center mt-4">
+
                           {item?.picture === "" || !item?.picture ? (
                             <img
                               src="https://png.pngtree.com/png-vector/20241115/ourmid/pngtree-user-icon-web-admin-profile-avatar-silver-color-style-vector-png-image_14430725.png"
                               alt=""
                               width={"30%"}
-                              className="rounded-full"
+                              className="rounded-full border-2 border-[#5b554b]"
                             />
                           ) : item.picture.startsWith(
                               "https://lh3.googleusercontent.com"
@@ -152,30 +171,45 @@ export default function Resources() {
                               src={item?.picture}
                               alt=""
                               width={"30%"}
-                              className="rounded-full"
+                              className="rounded-full border-2 border-[#5b554b]"
                             />
                           ) : (
                             <img
                               src={`${axiosInstance.defaults.baseURL}/uploads/${item?.picture}`}
                               alt=""
                               width={"30%"}
-                              className="rounded-full"
+                              className="rounded-full border-2 border-[#5b554b]"
                             />
                           )}
 
-                          <div className="flex flex-col justify-center">
-                            <h1>Username: {item?.username || item?.name}</h1>
-                            <h1>
-                              User Email ID: {item?.email || item?.userMail}
+                          <div className="flex flex-col justify-center gap-2 min-w-0">
+
+                            <h1 className="text-[#c4bdb2] text-sm break-words">
+                              Username:
+                              <span className="text-[#f0ede6] font-medium ml-1">
+                                {item?.username || item?.name}
+                              </span>
                             </h1>
+
+                            <h1 className="text-[#c4bdb2] text-sm break-all">
+                              User Email ID:
+                              <span className="text-[#f0ede6] font-medium ml-1">
+                                {item?.email || item?.userMail}
+                              </span>
+                            </h1>
+
                           </div>
                         </div>
                       </div>
                     ))}
+
                   </div>
                 ) : (
-                  <h1>No Users Available</h1>
+                  <h1 className="text-center text-[#aaa197] py-16">
+                    No Users Available
+                  </h1>
                 )}
+
               </div>
             )}
           </div>

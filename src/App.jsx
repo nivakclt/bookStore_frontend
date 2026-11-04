@@ -20,14 +20,19 @@ import PaymentFailed from "./User/pages/PaymentFailed";
 import PaymentSuccess from "./User/pages/PaymentSuccess";
 import { useContext } from "react";
 import { authContext } from "./contextapi/AuthContext";
+import SmoothScroll from "./Admin/pages/components/SmoothScroll";
 function App() {
 const { role, authUser } = useContext(authContext);
   return (
     <>
+    
+    <SmoothScroll />
+
       <Routes>
         {/* common */}
         <Route path="" element={<Home />} />
         <Route path="auth" element={<Auth />} />
+        <Route path="/about" element={<About />} />
 
         {/* user */}
         {authUser && (
@@ -38,7 +43,6 @@ const { role, authUser } = useContext(authContext);
                 <Route path="book/:bid" element={<BookDetails />} />
                 <Route path="contact" element={<Contact />} />
                 <Route path="profile" element={<Profile />} />
-                <Route path="/about" element={<About />} />
               </>
             }
             {

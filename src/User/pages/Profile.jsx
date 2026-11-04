@@ -126,29 +126,33 @@ function Profile() {
       {sidebar && <Profileupdate setSidebar={setSidebar} />}
 
       {/* Profile Section */}
-      <div className="w-full">
-        <div className="relative h-[30vh] bg-gray-900">
-          <div className="absolute -bottom-20 left-10">
+      <div className="w-full text-[#292723] pb-5">
+        <div className="relative h-[25vh] min-h-[160px] bg-[#292723]">
+          <div className="absolute -bottom-16 left-6 md:left-12">
             <img
               src={getProfilePicture()}
               alt="Profile"
-              className="h-40 w-40 rounded-full border-4 border-white object-cover"
+              className="h-32 w-32 rounded-full border-4 border-[#faf9f6] object-cover shadow-lg"
             />
           </div>
         </div>
 
         {/* Profile Details */}
-        <div className="px-10">
-          <h1 className="mt-24 text-xl font-bold">{username}</h1>
+        <div className="px-6 md:px-12">
+          <h1 className="mt-20 text-xl font-semibold tracking-wide text-[#292723]">
+            {username}
+          </h1>
 
-          <div className="mt-3 grid grid-cols-1 gap-4 md:grid-cols-2">
+          <div className="mt-3 grid grid-cols-1 gap-4 md:grid-cols-2 items-start">
             <div>
-              <p className="text-justify">{bio}</p>
+              <p className="text-sm leading-7 text-gray-600 text-justify">
+                {bio}
+              </p>
             </div>
 
             <div className="flex md:justify-end">
               <button
-                className="flex items-center gap-2 self-start rounded-lg bg-gray-900 px-4 py-3 text-white"
+                className="flex items-center gap-2 self-start rounded-sm bg-[#292723] px-5 py-2.5 text-sm text-white transition duration-300 hover:bg-[#99764b]"
                 onClick={() => setSidebar(!sidebar)}
               >
                 Edit <FaRegEdit />
@@ -159,15 +163,15 @@ function Profile() {
       </div>
 
       {/* Tabs */}
-      <div className="mt-12 flex w-full justify-center px-4">
-        <div className="flex w-full max-w-3xl items-end justify-center border-b border-black">
+      <div className="pt-8 flex w-full justify-center px-4">
+        <div className="flex w-full max-w-3xl items-end justify-center border-b border-[#d8cfc2]">
 
           {/* Sell Books */}
           <button
-            className={`relative whitespace-nowrap border border-b-0 px-3 py-3 ${
+            className={`relative whitespace-nowrap border border-b-0 px-4 py-3 text-xs md:text-sm font-medium transition duration-300 ${
               sellStatus
-                ? "border-black bg-white after:absolute after:bottom-[-1px] after:left-0 after:h-[1px] after:w-full after:bg-white"
-                : "border-transparent bg-transparent"
+                ? "border-[#d8cfc2] bg-white text-[#99764b] after:absolute after:bottom-[-1px] after:left-0 after:h-[1px] after:w-full after:bg-white"
+                : "border-transparent bg-transparent text-gray-500 hover:text-[#99764b]"
             }`}
             onClick={() => {
               setSellStatus(true);
@@ -180,10 +184,10 @@ function Profile() {
 
           {/* Book Status */}
           <button
-            className={`relative whitespace-nowrap border border-b-0 px-3 py-3 ${
+            className={`relative whitespace-nowrap border border-b-0 px-4 py-3 text-xs md:text-sm font-medium transition duration-300 ${
               bookStatus
-                ? "border-black bg-white after:absolute after:bottom-[-1px] after:left-0 after:h-[1px] after:w-full after:bg-white"
-                : "border-transparent bg-transparent"
+                ? "border-[#d8cfc2] bg-white text-[#99764b] after:absolute after:bottom-[-1px] after:left-0 after:h-[1px] after:w-full after:bg-white"
+                : "border-transparent bg-transparent text-gray-500 hover:text-[#99764b]"
             }`}
             onClick={() => {
               setSellStatus(false);
@@ -196,10 +200,10 @@ function Profile() {
 
           {/* Purchase History */}
           <button
-            className={`relative whitespace-nowrap border border-b-0 px-3 py-3 ${
+            className={`relative whitespace-nowrap border border-b-0 px-4 py-3 text-xs md:text-sm font-medium transition duration-300 ${
               purchaseStatus
-                ? "border-black bg-white after:absolute after:bottom-[-1px] after:left-0 after:h-[1px] after:w-full after:bg-white"
-                : "border-transparent bg-transparent"
+                ? "border-[#d8cfc2] bg-white text-[#99764b] after:absolute after:bottom-[-1px] after:left-0 after:h-[1px] after:w-full after:bg-white"
+                : "border-transparent bg-transparent text-gray-500 hover:text-[#99764b]"
             }`}
             onClick={() => {
               setSellStatus(false);
@@ -213,7 +217,7 @@ function Profile() {
       </div>
 
       {/* Main Content */}
-      <div className="mx-auto min-h-40 w-full max-w-6xl p-4">
+      <div className="mx-auto min-h-40 w-full max-w-6xl p-4 md:p-6">
 
         {/* Sell Books */}
         {sellStatus && <SellBook />}
@@ -225,34 +229,34 @@ function Profile() {
               userBooklist.map((item) => (
                 <div
                   key={item._id}
-                  className="grid grid-cols-1 gap-6 rounded-xl border p-5 shadow-sm md:grid-cols-6"
+                  className="grid grid-cols-1 gap-5 rounded-md border border-[#e5e0d8] bg-white p-4 shadow-sm transition duration-300 hover:shadow-md md:grid-cols-6"
                 >
                   {/* Book Details */}
                   <div className="md:col-span-5">
-                    <h1 className="text-xl font-bold">
+                    <h1 className="text-lg font-semibold text-[#292723]">
                       {item?.title}
                     </h1>
 
-                    <h4 className="mt-2 font-bold text-green-600">
+                    <h4 className="mt-2 font-semibold text-[#99764b]">
                       ₹{item?.price}
                     </h4>
 
-                    <p className="mt-3 text-justify">
+                    <p className="mt-3 text-sm leading-7 text-gray-600 text-justify">
                       {item?.abstract}
                     </p>
 
                     {/* Book Approval Status */}
                     <div className="mt-4">
                       {item?.status === "approved" ? (
-                        <span className="font-medium text-green-600">
+                        <span className="inline-block rounded-full bg-green-50 px-3 py-1 text-xs font-medium text-green-700">
                           Approved
                         </span>
                       ) : item?.status === "rejected" ? (
-                        <span className="font-medium text-red-600">
+                        <span className="inline-block rounded-full bg-red-50 px-3 py-1 text-xs font-medium text-red-600">
                           Rejected
                         </span>
                       ) : (
-                        <span className="font-medium text-yellow-600">
+                        <span className="inline-block rounded-full bg-yellow-50 px-3 py-1 text-xs font-medium text-yellow-700">
                           Pending
                         </span>
                       )}
@@ -264,12 +268,12 @@ function Profile() {
                     <img
                       src={item?.imageUrl}
                       alt={item?.title || "Book"}
-                      className="h-48 w-full rounded-lg object-cover"
+                      className="h-48 w-full rounded-md object-cover"
                     />
 
                     {item?.status === "pending" && (
                       <button
-                        className="rounded-md bg-red-500 p-2 text-white transition hover:bg-red-600"
+                        className="rounded-sm bg-[#a94b43] p-2 text-sm text-white transition hover:bg-red-700"
                         onClick={() => handleDeleteBook(item._id)}
                       >
                         Remove
@@ -279,8 +283,8 @@ function Profile() {
                 </div>
               ))
             ) : (
-              <div className="flex flex-col items-center justify-center">
-                <h3 className="text-lg font-semibold text-gray-900">
+              <div className="flex flex-col items-center justify-center py-8">
+                <h3 className="text-lg font-semibold text-[#292723]">
                   No Books Available!
                 </h3>
 
@@ -302,24 +306,24 @@ function Profile() {
                 {purchaselist.map((book) => (
                   <div
                     key={book._id}
-                    className="grid grid-cols-1 gap-6 rounded-xl border p-5 shadow-sm md:grid-cols-6"
+                    className="grid grid-cols-1 gap-5 rounded-md border border-[#e5e0d8] bg-white p-4 shadow-sm transition duration-300 hover:shadow-md md:grid-cols-6"
                   >
                     {/* Purchased Book Details */}
                     <div className="md:col-span-5">
-                      <h1 className="text-xl font-bold">
+                      <h1 className="text-lg font-semibold text-[#292723]">
                         {book?.title}
                       </h1>
 
-                      <h4 className="mt-2 font-bold text-green-600">
+                      <h4 className="mt-2 font-semibold text-[#99764b]">
                         ₹{book?.price}
                       </h4>
 
-                      <p className="mt-3 text-justify">
+                      <p className="mt-3 text-sm leading-7 text-gray-600 text-justify">
                         {book?.abstract}
                       </p>
 
                       <div className="mt-4">
-                        <span className="font-medium text-green-600">
+                        <span className="inline-block rounded-full bg-green-50 px-3 py-1 text-xs font-medium text-green-700">
                           Purchased
                         </span>
                       </div>
@@ -330,15 +334,15 @@ function Profile() {
                       <img
                         src={book?.imageUrl}
                         alt={book?.title || "Purchased book"}
-                        className="h-48 w-full rounded-lg object-cover"
+                        className="h-48 w-full rounded-md object-cover"
                       />
                     </div>
                   </div>
                 ))}
               </div>
             ) : (
-              <div className="flex flex-col items-center justify-center">
-                <h3 className="text-lg font-semibold text-gray-900">
+              <div className="flex flex-col items-center justify-center py-8">
+                <h3 className="text-lg font-semibold text-[#292723]">
                   No Books Available!
                 </h3>
 

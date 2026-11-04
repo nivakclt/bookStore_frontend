@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import Preloader from "../components/Preloader";
 import Header from "../User/pages/components/Header";
@@ -57,47 +58,51 @@ function Home() {
       ) : (
         <>
           <Header />
-          <div>
+          <div className="bg-[#faf9f6] text-[#292723]">
+
 {/* Hero Section */}
 <section className="w-full">
-  <div className="relative h-screen">
+  <div className="relative h-[85vh] min-h-[550px] overflow-hidden">
 
     {/* Background Image */}
     <div
       className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1521587760476-6c12a4b040da?fm=jpg&q=60&w=3000&auto=format&fit=crop')]
-      bg-cover bg-center"
+      bg-cover bg-center transition-transform duration-700 hover:scale-105"
     ></div>
 
     {/* Dark Overlay */}
-    <div className="absolute inset-0 bg-black/50"></div>
+    <div className="absolute inset-0 bg-black/55"></div>
 
     {/* Content */}
     <div className="relative z-10 h-full flex flex-col items-center justify-center text-white px-6">
 
-<h1 className="text-6xl md:text-8xl font-extralight text-center tracking-wide">
+      <p className="text-xs md:text-sm tracking-[5px] uppercase text-gray-300 mb-5">
+        Welcome to Bookshelf
+      </p>
+
+      <h1 className="text-5xl md:text-8xl font-extralight text-center tracking-wide leading-tight">
         Wonderful Gifts
       </h1>
 
-      <p className="mt-6 text-gray-300 text-center max-w-md">
+      <p className="mt-6 text-gray-300 text-center max-w-md leading-7">
         Give your family and friends a book.
       </p>
 
-      <div className="relative mt-10">
+      <div className="relative mt-10 w-full max-w-[450px]">
         <input
-        value={search}
-        onChange={(e)=>setSearch(e.target.value)}
+          value={search}
+          onChange={(e)=>setSearch(e.target.value)}
           type="text"
           placeholder="Search books..."
-          className="w-[300px] md:w-[450px] bg-white/95 text-black rounded-full px-6 py-3 outline-none"
+          className="w-full bg-white/95 text-black rounded-full px-6 py-4 pr-14 outline-none border border-transparent focus:border-[#b49a7a] transition shadow-lg"
         />
-        
-<button
-  onClick={handleSearchNavigate}
-  className="absolute right-5 top-1/2 -translate-y-1/2 text-gray-500"
->
-  <FaSearch />
-</button>
 
+        <button
+          onClick={handleSearchNavigate}
+          className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-[#9a8265] transition"
+        >
+          <FaSearch />
+        </button>
       </div>
 
     </div>
@@ -107,57 +112,71 @@ function Home() {
 
             {/* new arrivals */}
 
-            <section className="w-full bg-black text-white py-16">
-              <h1 className="text-4xl font-light text-center mb-3">
-                New Arrivals
-              </h1>
+            <section className="w-full bg-[#faf9f6] text-[#292723] py-20 px-6 md:px-12">
 
-              <p className="text-center text-gray-400 mb-12">
-                Discover our latest collection
-              </p>
+              <div className="max-w-7xl mx-auto">
+
+                <p className="text-center text-xs tracking-[4px] text-[#9a8265] mb-3">
+                  DISCOVER SOMETHING NEW
+                </p>
+
+                <h1 className="text-4xl md:text-5xl font-light text-center mb-4">
+                  New Arrivals
+                </h1>
+
+                <p className="text-center text-gray-500 mb-14">
+                  Discover our latest collection
+                </p>
 
             {/* card */}{
               latest.length>0?
-              <div className="flex justify-center">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
               {
                 latest.map(item => (
-              <div className="w-64" key={item._id}>
-                <img
-                  src={item.imageUrl}
-                  alt={item.title}
-                  className="w-full h-80 object-cover rounded-md transition duration-300 hover:scale-105"
-                />
+              <div className="group" key={item._id}>
+                <div className="overflow-hidden bg-[#f0ede6]">
+                  <img
+                    src={item.imageUrl}
+                    alt={item.title}
+                    className="w-full h-80 object-cover transition duration-500 group-hover:scale-105"
+                  />
+                </div>
 
-                <h2 className="mt-4 text-center text-lg">{item?.title}</h2>
+                <h2 className="mt-5 text-center text-lg font-medium text-[#292723]">
+                  {item?.title}
+                </h2>
 
-                <p className="text-center text-gray-400 mt-1">₹{item?.price}</p>
+                <p className="text-center text-[#9a8265] mt-2">
+                  ₹{item?.price}
+                </p>
               </div>
             ))
               }
              
               </div>
               :
-              <div className="text-center p-10">
+              <div className="text-center p-10 text-gray-500">
                 No Books Available!!!!
               </div>
 }
 
-        <div className="text-center mt-12">
-          <button className="border border-white px-6 py-3 rounded-md hover:bg-white hover:text-black transition">
-            Explore More
-          </button>
         </div>
       </section>
       
       {/* authors */}
-            <section className="w-full py-16 px-6">
-              <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+            <section className="w-full py-20 px-6 md:px-12 bg-[#f0ede6]">
+              <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-12 max-w-6xl mx-auto items-center">
+
                 <div>
-                  <h1 className="text-sm text-gray-500">FEATURED AUTHORS</h1>
-                  <h1 className="text-4xl font-light my-4">
+                  <p className="text-xs tracking-[4px] text-[#9a8265]">
+                    FEATURED AUTHORS
+                  </p>
+
+                  <h1 className="text-4xl md:text-5xl font-light my-6 leading-tight">
                     CAPTIVATE WITH EVERY WORDS
                   </h1>
-                  <p className="text-justify text-gray-600 leading-5">
+
+                  <p className="text-justify text-gray-600 leading-8">
                     Discover stories that inspire, educate, and entertain.
                     Explore works from talented authors and immerse yourself in
                     unforgettable journeys.Every great book begins with a single
@@ -167,33 +186,37 @@ function Home() {
                     chapter inspire you.
                   </p>
                 </div>
-                <div className="px-3 items-center">
+
+                <div className="px-3">
                   <img
                     src="https://media.istockphoto.com/id/1289220781/photo/portrait-of-happy-smiling-woman-at-desk.jpg?s=612x612&w=0&k=20&c=FtC05luuxRpiKRj5F84e2CiPf0h_ZuX6o7o5JwlNaJM="
-                    className="w-full rounded-lg transition-all duration-300 hover:scale-105"
+                    className="w-full h-[400px] object-cover transition-all duration-500 hover:scale-[1.02] rounded-3xl"
                   />
                 </div>
+
               </div>
             </section>
-            {/* testimony */}
-            <section className="bg-black text-white max-w-5xl mx-auto rounded-3xl py-12 px-8 my-16">
-              <h1 className="text-center text-sm tracking-widest text-gray-400">
-                TESTIMONIALS
-              </h1>
 
-              <h1 className="text-center text-3xl font-light my-3">
+            {/* testimony */}
+            <section className="bg-black text-white max-w-5xl mx-auto rounded-4xl py-16 px-8 md:px-16 my-20">
+
+              <p className="text-center text-xs tracking-[4px] text-[#b49a7a]">
+                TESTIMONIALS
+              </p>
+
+              <h1 className="text-center text-3xl md:text-4xl font-light my-5">
                 What Our Readers Say
               </h1>
 
-              <div className="flex justify-center my-8">
+              <div className="flex justify-center my-10">
                 <img
                   src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR5DKe2Zhg37Z7ngA7dphW51BLQZylYgLje4eVrMMTWZqHS3nx83nGkKdWf&s=10"
                   alt="reader"
-                  className="w-32 h-32 rounded-full object-cover"
+                  className="w-24 h-24 rounded-full object-cover border-2 border-[#b49a7a] p-1"
                 />
               </div>
 
-              <h2 className="text-center text-xl font-semibold mb-4">
+              <h2 className="text-center text-xl font-medium mb-5">
                 John Doe
               </h2>
 
@@ -208,6 +231,7 @@ function Home() {
                 atmosphere inspires me to explore new genres and authors."
               </p>
             </section>
+
             <ToastContainer position="top-center"/>
           </div>
           <Footer />
