@@ -2,6 +2,10 @@
 
 A responsive Bookstore web application built with React, allowing users to browse books, view book details, manage profiles, and interact with a collection of books.
 
+## Live Demo
+
+[View Live Project]-https://book-store-frontend-tau-plum.vercel.app/
+
 ## Tech Stack
 
 <p>
