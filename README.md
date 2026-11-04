@@ -1,17 +1,63 @@
-# React + Vite
+# Bookstore – Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A responsive Bookstore web application built with React, allowing users to browse books, view book details, manage profiles, and interact with a collection of books.
 
-Currently, two official plugins are available:
+## Tech Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+<p>
+  <img src="https://skillicons.dev/icons?i=react,js,html,css,bootstrap,redux" />
+</p>
 
-## React Compiler
+- **Frontend:** React.js
+- **Styling:** CSS, Bootstrap
+- **State Management:** Redux Toolkit
+- **API Integration:** Axios
+- **Routing:** React Router
+- **Notifications:** React Toastify
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Features
 
-## Expanding the ESLint configuration
+- User registration and login
+- Browse and view books
+- Book details page
+- User profile management
+- Admin dashboard
+- Book management
+- API integration
+- Responsive user interface
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
-"# bookStore" 
+## Installation
+
+Clone the repository:
+
+```bash
+git clone YOUR_FRONTEND_REPOSITORY_URL
+```
+
+Navigate to the project directory:
+
+```bash
+cd bookstore_client
+```
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Start the development server:
+
+```bash
+npm run dev
+```
+
+## Backend
+
+This frontend communicates with a Node.js and Express.js backend using REST APIs and MongoDB.
+
+## Developer
+
+**Niva K.**
+
+[GitHub](https://github.com/nivakclt)
